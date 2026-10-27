@@ -114,6 +114,11 @@ const STATS = [
    6. THE SEVEN OFFICIAL SERVICES
       Descriptions follow the client brief \u2014 wording may be polished,
       meaning must not change.
+
+      `photo` stays empty until the client supplies real photos. An empty value
+      renders a 16:9 placeholder with the same dimensions the photo will use, so
+      filling this field (e.g. 'assets/photos/layanan-rental.jpg') is the only
+      change needed later \u2014 the card layout does not change.
    --------------------------------------------------------------------------- */
 const SERVICES = [
   {
@@ -121,49 +126,49 @@ const SERVICES = [
     icon: 'i-car',
     name: 'Rental Kendaraan',
     desc: 'Sewa kendaraan dengan masa penggunaan harian, mingguan, atau bulanan untuk kebutuhan pribadi maupun perusahaan.',
-    use: 'Untuk penggunaan pribadi dan korporat'
+    photo: ''
   },
   {
     id: 'antar-jemput',
     icon: 'i-users',
     name: 'Antar Jemput Karyawan',
     desc: 'Transportasi karyawan yang disusun mengikuti rute dan jam kerja perusahaan, dengan penekanan pada kenyamanan dan ketepatan waktu.',
-    use: 'Untuk mobilitas karyawan perusahaan'
+    photo: ''
   },
   {
     id: 'carter',
     icon: 'i-pin',
     name: 'Carter Kendaraan',
     desc: 'Sewa kendaraan dengan rute dan durasi yang fleksibel untuk perjalanan dalam kota maupun luar kota.',
-    use: 'Untuk perjalanan luar kota dan rombongan'
+    photo: ''
   },
   {
     id: 'pariwisata',
     icon: 'i-ticket',
     name: 'Transportasi Pariwisata',
     desc: 'Kendaraan nyaman untuk perjalanan wisata keluarga, sekolah, komunitas, maupun rombongan perusahaan.',
-    use: 'Untuk wisata keluarga dan rombongan'
+    photo: ''
   },
   {
     id: 'perusahaan',
     icon: 'i-badge',
     name: 'Transportasi Perusahaan',
     desc: 'Mendukung operasional bisnis harian, termasuk perjalanan dinas, kunjungan kerja, rapat, dan mobilitas karyawan.',
-    use: 'Untuk kebutuhan operasional bisnis'
+    photo: ''
   },
   {
     id: 'logistik',
     icon: 'i-truck',
     name: 'Transportasi Logistik',
     desc: 'Kendaraan untuk pengiriman dan distribusi barang, dengan pilihan kendaraan yang disesuaikan dengan jenis muatan.',
-    use: 'Untuk pengiriman dan distribusi barang'
+    photo: ''
   },
   {
     id: 'projek',
     icon: 'i-hardhat',
     name: 'Transportasi Projek',
     desc: 'Transportasi khusus untuk mendukung operasional projek: mobilitas karyawan, perpindahan tim kerja, dan pengangkutan kebutuhan di lokasi projek.',
-    use: 'Untuk operasional projek dan tim lapangan'
+    photo: ''
   }
 ];
 

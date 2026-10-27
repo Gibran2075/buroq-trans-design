@@ -241,18 +241,32 @@
     const el = $('#serviceGrid');
     if (!el) return;
     el.innerHTML = (typeof SERVICES !== 'undefined' ? SERVICES : [])
-      .map((s) =>
-        '<article class="svc-card">' +
-        '<div class="svc-media">' + icon(s.icon) + '</div>' +
-        '<div class="svc-body">' +
-        '<h3 class="svc-title">' + esc(s.name) + '</h3>' +
-        '<p class="svc-desc">' + esc(s.desc) + '</p>' +
-        '<p class="svc-use">' + esc(s.use) + '</p>' +
-        '<button type="button" class="btn btn-red" data-open-booking data-service="' + esc(s.name) + '">' +
-        'Tanya Layanan</button>' +
-        '</div>' +
-        '</article>'
-      )
+      .map((s) => {
+        /* a real photo is rendered only once SERVICES[].photo is filled in; the
+           placeholder keeps the exact 16:9 box the photo will occupy */
+        const photo = s.photo ? asset(s.photo) : '';
+        const media = photo
+          ? '<img src="' + esc(photo) + '" alt="' + esc('Layanan ' + s.name) + '" loading="lazy">'
+          : '<span class="svc-photo-empty">' + icon('i-image') +
+            '<span class="svc-photo-label" aria-hidden="true">Foto layanan</span></span>';
+
+        return '<article class="svc-card">' +
+          '<div class="svc-photo' + (photo ? '' : ' is-empty') + '"' +
+          (photo ? '' : ' role="img" aria-label="' + esc('Foto layanan ' + s.name + ' belum tersedia') + '"') + '>' +
+          media +
+          '</div>' +
+          '<div class="svc-body">' +
+          '<h3 class="svc-title">' +
+          '<span class="svc-ico" aria-hidden="true">' + icon(s.icon) + '</span>' +
+          esc(s.name) +
+          '</h3>' +
+          '<p class="svc-desc">' + esc(s.desc) + '</p>' +
+          '<button type="button" class="svc-link" data-open-booking data-service="' + esc(s.name) + '">' +
+          'Tanya layanan' + icon('i-arrow-right') +
+          '</button>' +
+          '</div>' +
+          '</article>';
+      })
       .join('');
   };
 
@@ -612,6 +626,15 @@
     new IntersectionObserver((entries) => {
       waFab.classList.toggle('is-suppressed', entries[0].isIntersecting);
     }, { threshold: 0.12 }).observe(heroSection);
+  }
+
+  /* on widths where the button would sit on top of the service card column it
+     steps aside for as long as that section is on screen (see body.in-services) */
+  const catalogSection = $('#layanan');
+  if (catalogSection && 'IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => {
+      document.body.classList.toggle('in-services', entries[0].isIntersecting);
+    }, { threshold: 0 }).observe(catalogSection);
   }
 
   /* ================================ INIT =============================== */

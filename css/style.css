@@ -438,37 +438,70 @@ a.hc-value:hover{ color:var(--gold-light) }
 
 /* =============================================================================
    5. SERVICE CATALOG — the seven official services
+   Cards reserve a 16:9 photo slot for each service; until the client supplies
+   photos the slot renders an empty placeholder of exactly the same size.
    ============================================================================= */
-.catalog{ background:#fff; padding:clamp(46px,5vw,70px) 0 clamp(56px,6vw,84px) }
-.catalog .h2{ margin-top:12px }
+.catalog{ background:#fff; padding:clamp(50px,5vw,72px) 0 clamp(54px,5.5vw,78px) }
+.catalog .h2{ margin-top:10px }
+.catalog .section-sub{ margin-top:10px; max-width:620px }
 
-/* 12-column grid so the short second row (4 + 3) can stay optically centred */
-.svc-grid{ display:grid; grid-template-columns:repeat(12,1fr); gap:26px; margin-top:40px }
+.svc-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  grid-auto-rows:1fr;               /* all rows share one card height on desktop */
+  gap:clamp(16px,1.8vw,24px);
+  margin-top:clamp(26px,3vw,36px);
+}
+
 .svc-card{
-  grid-column:span 3;
   display:flex; flex-direction:column;
-  background:#fff; border:1px solid #EFDC9A; border-radius:13px; padding:9px;
-  box-shadow:var(--shadow-card); transition:transform .25s ease, box-shadow .25s ease;
+  background:#fff; border:1px solid #E6EBF3; border-radius:10px;
+  overflow:hidden;
+  box-shadow:0 16px 30px -30px rgba(7,27,61,.55);
+  transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease;
 }
-.svc-card:hover{ transform:translateY(-5px); box-shadow:0 30px 50px -34px rgba(7,27,61,.7) }
-.svc-card:nth-child(5){ grid-column:2 / span 3 }
-.svc-card:nth-child(6){ grid-column:5 / span 3 }
-.svc-card:nth-child(7){ grid-column:8 / span 3 }
+.svc-card:hover{ transform:translateY(-2px); border-color:#D5DEEC; box-shadow:0 22px 36px -30px rgba(7,27,61,.55) }
+.svc-card:focus-within{ border-color:#C9D4E6 }
 
-.svc-media{
-  height:118px; border-radius:9px; display:grid; place-items:center; overflow:hidden;
-  background:linear-gradient(158deg,#EAC544,#C99C1E);
+/* image slot — the placeholder and the future photo share this exact box */
+.svc-photo{ position:relative; aspect-ratio:16/9; background:#EEF2F8; overflow:hidden }
+.svc-photo img{ display:block; width:100%; height:100%; object-fit:cover }
+.svc-photo.is-empty{ display:flex; align-items:center; justify-content:center }
+.svc-photo.is-empty::before{
+  content:""; position:absolute; inset:9px; z-index:0;
+  border:1px dashed #C9D3E2; border-radius:6px;
 }
-.svc-media .ico{ width:40px; height:40px; color:#12224A; opacity:.92 }
-.svc-body{ display:flex; flex-direction:column; flex:1; padding:16px 11px 10px }
-.svc-title{ font-family:Poppins,sans-serif; font-size:14.5px; font-weight:700; line-height:1.4; color:#0E1B33 }
-.svc-desc{ margin-top:8px; font-size:12.6px; line-height:1.62; color:var(--muted) }
-.svc-use{
-  margin-top:12px; padding-top:10px; border-top:1px dashed #E9E2C6;
-  font-family:Poppins,sans-serif; font-size:11.5px; font-weight:600;
-  line-height:1.55; color:#8A7526;
+.svc-photo-empty{
+  position:relative; z-index:1;
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+  color:#93A1B6;
 }
-.svc-card .btn-red{ margin-top:14px; height:42px; font-size:12px; letter-spacing:.05em; text-transform:uppercase }
+.svc-photo-empty .ico{ width:20px; height:20px }
+.svc-photo-label{
+  font-family:Poppins,sans-serif; font-size:10px; font-weight:600;
+  letter-spacing:.13em; text-transform:uppercase; color:#8B99AE;
+}
+
+.svc-body{ display:flex; flex-direction:column; flex:1; padding:16px 16px 14px }
+.svc-title{
+  display:flex; align-items:center; gap:8px;
+  font-family:Poppins,sans-serif; font-size:15px; font-weight:700;
+  line-height:1.4; color:#0E1B33;
+}
+.svc-ico{ flex:none; display:grid; place-items:center; color:#C6971A }
+.svc-ico .ico{ width:16px; height:16px }
+.svc-desc{ margin-top:8px; font-size:13px; line-height:1.66; color:var(--muted); }
+
+.svc-link{
+  margin-top:auto; padding:14px 0 2px; align-self:flex-start;
+  display:inline-flex; align-items:center; gap:6px;
+  background:none; border:0; cursor:pointer;
+  font-family:Poppins,sans-serif; font-size:12.5px; font-weight:600; color:#0E1B33;
+}
+.svc-link .ico{ width:13px; height:13px; color:#B99212; transition:transform .2s ease }
+.svc-link:hover{ color:#B99212 }
+.svc-link:hover .ico{ transform:translateX(3px) }
+.svc-link:focus-visible{ outline:2px solid var(--gold); outline-offset:3px; border-radius:3px }
 
 /* =============================================================================
    6. WHY US
@@ -737,20 +770,26 @@ a.hc-value:hover{ color:var(--gold-light) }
 /* =============================================================================
    FLOATING WHATSAPP + TOAST
    ============================================================================= */
+/* compact icon button: stays functional without covering card content */
 .wa-fab{
-  position:fixed; right:16px; bottom:16px; z-index:70;
-  display:inline-flex; align-items:center; gap:9px;
-  background:#25D366; color:#fff; border:0; cursor:pointer;
-  border-radius:999px; padding:12px 20px;
-  font-family:Poppins,sans-serif; font-size:14px; font-weight:600;
+  position:fixed; right:20px; bottom:20px; z-index:70;
+  display:inline-flex; align-items:center; justify-content:center;
+  width:56px; height:56px;
+  background:#25D366; color:#fff; border:0; cursor:pointer; border-radius:50%;
   box-shadow:0 16px 30px -16px rgba(0,0,0,.6);
   transition:transform .2s ease, opacity .2s ease, visibility .2s ease;
 }
+.wa-fab span{ display:none }
 .wa-fab:hover{ transform:translateY(-3px) }
 .wa-fab.is-suppressed{
   opacity:0; visibility:hidden; transform:translateY(14px); pointer-events:none;
 }
-.wa-fab .ico{ width:20px; height:20px }
+/* the service cards carry their own CTA, so the floating button steps aside
+   while that section is on screen wherever it would overlap the card column */
+@media (max-width:1320px){
+  body.in-services .wa-fab{ opacity:0; visibility:hidden; transform:translateY(14px); pointer-events:none }
+}
+.wa-fab .ico{ width:24px; height:24px }
 
 .toast{
   position:fixed; left:50%; bottom:24px; transform:translateX(-50%);
@@ -926,12 +965,7 @@ a.hc-value:hover{ color:var(--gold-light) }
   .service-media img{ width:100%; margin-left:0 }
   .service-card{ margin-left:0 }
 
-  .svc-grid{ grid-template-columns:repeat(2,1fr); gap:22px }
-  .svc-card,
-  .svc-card:nth-child(5),
-  .svc-card:nth-child(6),
-  .svc-card:nth-child(7){ grid-column:auto }
-  .svc-card:last-child{ grid-column:1 / -1; width:calc(50% - 11px); justify-self:center }
+  .svc-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px }
   .benefit-grid{ grid-template-columns:repeat(2,1fr); gap:22px }
 
   .corp-grid{ grid-template-columns:1fr }
@@ -987,12 +1021,22 @@ a.hc-value:hover{ color:var(--gold-light) }
   .banner-title{ font-size:clamp(24px,6.5vw,28px); max-width:none }
   .banner-sub{ font-size:13.5px }
 
-  .svc-grid{ gap:18px }
-  .svc-card:last-child{ width:100% }
-  .svc-media{ height:104px }
-  .svc-media .ico{ width:34px; height:34px }
-  .svc-body{ padding:14px 8px 8px }
-  .svc-title{ font-size:14px }
+  /* services become a compact list: photo left, text right, no full-width CTA */
+  .svc-grid{ grid-template-columns:minmax(0,1fr); grid-auto-rows:auto; gap:12px; margin-top:22px }
+  .svc-card{
+    display:grid; grid-template-columns:104px minmax(0,1fr);
+    align-items:center; gap:14px; padding:12px;
+  }
+  .svc-card:hover{ transform:none }
+  .svc-photo{ aspect-ratio:1/1; border-radius:7px }
+  .svc-photo.is-empty::before{ inset:7px }
+  .svc-photo-empty{ gap:4px }
+  .svc-photo-empty .ico{ width:17px; height:17px }
+  .svc-photo-label{ font-size:9px; letter-spacing:.07em }
+  .svc-body{ padding:0 }
+  .svc-title{ font-size:14.5px; line-height:1.35 }
+  .svc-desc{ margin-top:5px; font-size:12.5px; line-height:1.55 }
+  .svc-link{ margin-top:6px; padding:6px 0; min-height:34px }
 
   .benefit-grid{ grid-template-columns:1fr }
   .b-card{ padding:22px 20px 24px }
@@ -1031,12 +1075,11 @@ a.hc-value:hover{ color:var(--gold-light) }
   .hero-title{ font-size:clamp(26px,7.6vw,33px) }
 
   .stats{ grid-template-columns:repeat(2,1fr) }
-  .svc-grid{ grid-template-columns:1fr }
   .about-car-a{ width:56%; left:-6% }
   .about-car-b{ width:62% }
   .steps-cards{ grid-template-columns:1fr }
   .closing-cars{ height:140px; margin-bottom:-58px }
-  .wa-fab{ padding:11px 16px; font-size:13px }
+  .wa-fab{ width:52px; height:52px; right:14px; bottom:14px }
   .modal-card{ max-width:100%; margin:0 8px }
 }
 
