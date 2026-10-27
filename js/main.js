@@ -54,6 +54,21 @@
   const waLink = (number, text) =>
     number ? 'https://wa.me/' + number + '?text=' + encodeURIComponent(text) : '';
 
+  /* every element carrying data-wa-message gets its href built from the one
+     CONFIG.whatsapp number, so the contact number lives in a single place */
+  const applyWaLinks = () => {
+    $$('[data-wa-message]').forEach((el) => {
+      const href = waLink(CONFIG.whatsapp, el.dataset.waMessage || '');
+      if (href) {
+        el.setAttribute('href', href);
+      } else {
+        /* no verified number: fall back to the inquiry form instead of a dead link */
+        el.removeAttribute('href');
+        el.setAttribute('data-open-booking', '');
+      }
+    });
+  };
+
   /* ------------------------------------------------------------- navigation */
   const navList = $('#navList');
   const mainNav = $('#mainNav');
@@ -86,6 +101,16 @@
       document.body.classList.toggle('is-locked', open);
     });
     if (navBackdrop) navBackdrop.addEventListener('click', closeNav);
+  }
+
+  /* the header toggle is covered by the open drawer, so the drawer carries its
+     own close control and hands focus back to the toggle */
+  const navClose = $('#navClose');
+  if (navClose) {
+    navClose.addEventListener('click', () => {
+      closeNav();
+      if (navToggle) navToggle.focus();
+    });
   }
 
   /* ------------------------------------------------------- header + spy */
@@ -163,69 +188,35 @@
   });
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeModal();
+    if (e.key !== 'Escape') return;
+    closeModal();
+    closeNav();
   });
 
-  /* ============================ HERO SLIDER ============================== */
+  /* ================================ HERO ================================ */
   const heroEyebrow = $('#heroEyebrow');
   const heroTitle = $('#heroTitle');
   const heroText = $('#heroText');
   const heroCars = $('#heroCars');
-  const heroPrev = $('#heroPrev');
-  const heroNext = $('#heroNext');
-
-  let heroIndex = 0;
 
   const formatTitle = (str) =>
     esc(str).replace(/\{gold:([^}]+)\}/g, '<em class="gold">$1</em>');
 
+  /* one static headline block + one dominant vehicle (no slider) */
   const renderHero = () => {
-    const slides = typeof HERO_SLIDES !== 'undefined' ? HERO_SLIDES : [];
-    const slide = slides[heroIndex];
-    if (!slide) return;
+    const hero = typeof HERO !== 'undefined' ? HERO : null;
+    if (!hero || !heroCars) return;
 
-    if (heroEyebrow) heroEyebrow.textContent = slide.eyebrow;
-    if (heroTitle) heroTitle.innerHTML = formatTitle(slide.title);
-    if (heroText) heroText.textContent = slide.text;
+    if (heroEyebrow) heroEyebrow.textContent = hero.eyebrow || '';
+    if (heroTitle) heroTitle.innerHTML = formatTitle(hero.title || '');
+    if (heroText) heroText.textContent = hero.text || '';
 
-    if (heroCars) {
-      heroCars.innerHTML = (slide.cars || [])
-        .map((car) =>
-          '<img class="' + esc(car.cls) + '" data-asset="vehicles.' + esc(car.asset) + '" ' +
-          'src="' + esc(asset('vehicles.' + car.asset)) + '" alt="' + esc(car.alt) + '" loading="lazy">'
-        )
-        .join('');
-    }
-  };
-
-  if (heroPrev) {
-    heroPrev.addEventListener('click', () => {
-      const slides = HERO_SLIDES || [];
-      heroIndex = (heroIndex - 1 + slides.length) % slides.length;
-      renderHero();
-    });
-  }
-  if (heroNext) {
-    heroNext.addEventListener('click', () => {
-      const slides = HERO_SLIDES || [];
-      heroIndex = (heroIndex + 1) % slides.length;
-      renderHero();
-    });
-  }
-
-  /* hero badges — factual service attributes shown once, above the hero cars */
-  const renderBadges = () => {
-    const badges = typeof HERO_BADGES !== 'undefined' ? HERO_BADGES : [];
-    const hero = $('#heroBadges');
-    if (!hero) return;
-    hero.innerHTML = badges
-      .map((b) =>
-        '<li class="hb-item">' +
-        '<span class="hb-ico">' + icon(b.icon) + '</span>' +
-        '<span class="hb-label">' + b.label + '</span>' +
-        '</li>'
-      )
-      .join('');
+    const v = hero.vehicle || {};
+    if (!v.asset) return;
+    heroCars.innerHTML =
+      '<img class="hc-main" data-asset="vehicles.' + esc(v.asset) + '" ' +
+      'src="' + esc(asset('vehicles.' + v.asset)) + '" alt="' + esc(v.alt || '') + '" ' +
+      'fetchpriority="high" decoding="async">';
   };
 
   /* ============================== STATS ================================= */
@@ -614,10 +605,19 @@
     });
   }
 
+  /* keep the floating button away from the hero: it stays hidden while the
+     hero (contact strip + primary CTA) is on screen and appears afterwards */
+  const heroSection = $('#home');
+  if (waFab && heroSection && 'IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => {
+      waFab.classList.toggle('is-suppressed', entries[0].isIntersecting);
+    }, { threshold: 0.12 }).observe(heroSection);
+  }
+
   /* ================================ INIT =============================== */
   resolveAssets();
   bindData();
-  renderBadges();
+  applyWaLinks();
   renderHero();
   renderStats();
   renderServices();

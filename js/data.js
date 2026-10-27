@@ -87,38 +87,18 @@ const NAV_LINKS = [
 ];
 
 /* ---------------------------------------------------------------------------
-   4. HERO SLIDES  (manual slide — no autoplay)
+   4. HERO  (one static headline block — no slider, one dominant vehicle)
+       {gold:...} marks the phrase rendered in the accent colour.
    --------------------------------------------------------------------------- */
-const HERO_SLIDES = [
-  {
-    eyebrow: 'CV. EN BUROQ TRANSPORTASI',
-    title: 'Solusi Transportasi untuk {gold:Kebutuhan} Anda',
-    text: 'Rental kendaraan, antar jemput karyawan, carter, pariwisata, transportasi perusahaan, logistik, hingga transportasi projek \u2014 semuanya dapat dikonsultasikan sesuai kebutuhan Anda.',
-    cars: [
-      { asset: 'heroMpv', alt: 'Kendaraan penumpang untuk layanan transportasi BUROQ TRANS', cls: 'hc-back' },
-      { asset: 'heroWhite', alt: 'SUV putih untuk kebutuhan perjalanan keluarga dan rombongan', cls: 'hc-white' },
-      { asset: 'heroBlack', alt: 'SUV gelap untuk kebutuhan perjalanan dinas perusahaan', cls: 'hc-black' }
-    ]
-  },
-  {
-    eyebrow: 'BUROQ TRANS \u2014 SOLUSI TRANSPORTASI',
-    title: 'Mendukung Mobilitas {gold:Personal} dan Bisnis',
-    text: 'Dari perjalanan pribadi dan rombongan, mobilitas karyawan harian, sampai pengiriman barang dan operasional projek di lapangan.',
-    cars: [
-      { asset: 'whiteAlt', alt: 'SUV putih untuk antar jemput karyawan', cls: 'hc-back' },
-      { asset: 'heroMpv', alt: 'Kendaraan penumpang untuk perjalanan dinas', cls: 'hc-white' },
-      { asset: 'blackAlt', alt: 'SUV gelap untuk kebutuhan operasional perusahaan', cls: 'hc-black' }
-    ]
+const HERO = {
+  eyebrow: 'MITRA TRANSPORTASI UNTUK BISNIS & PERJALANAN',
+  title: 'Solusi {gold:Transportasi Andal} untuk Setiap Kebutuhan',
+  text: 'Dari rental kendaraan dan antar-jemput karyawan hingga kebutuhan transportasi perusahaan dan logistik proyek, Buroq Trans siap membantu perjalanan Anda dengan solusi yang dapat disesuaikan.',
+  vehicle: {
+    asset: 'heroMpv',
+    alt: 'Kendaraan penumpang BUROQ TRANS untuk transportasi perusahaan dan antar-jemput karyawan'
   }
-];
-
-/* Factual service attributes \u2014 not marketing superlatives. */
-const HERO_BADGES = [
-  { icon: 'i-clock', label: 'SENIN\u2013SABTU<br>08.00\u201317.00' },
-  { icon: 'i-users', label: 'PERSONAL &<br>PERUSAHAAN' },
-  { icon: 'i-pin',   label: 'RUTE & JADWAL<br>DAPAT DIBAHAS' },
-  { icon: 'i-layers',label: '7 JENIS<br>LAYANAN' }
-];
+};
 
 /* ---------------------------------------------------------------------------
    5. TRUST STRIP  \u2014 factual service attributes, no invented figures

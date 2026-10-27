@@ -90,14 +90,19 @@
     </a>
 
     <nav class="nav" id="mainNav" aria-label="Navigasi utama">
+      <button type="button" class="nav-close" id="navClose" aria-label="Tutup menu navigasi">
+        <svg class="ico" aria-hidden="true"><use href="#i-close"></use></svg>
+      </button>
       <ul class="nav-list" id="navList"></ul>
     </nav>
 
     <div class="header-actions">
-      <button type="button" class="btn btn-gold btn-book-now" data-open-booking>
+      <a class="btn btn-gold btn-book-now" target="_blank" rel="noopener"
+         href="https://wa.me/6281320075918?text=Halo%20BUROQ%20TRANS,%20saya%20ingin%20konsultasi%20mengenai%20kebutuhan%20transportasi%20saya."
+         data-wa-message="Halo BUROQ TRANS, saya ingin konsultasi mengenai kebutuhan transportasi saya.">
         <svg class="ico" aria-hidden="true"><use href="#i-whatsapp"></use></svg>
         <span>Hubungi Kami</span>
-      </button>
+      </a>
       <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Buka menu navigasi">
         <svg class="ico ico-open" aria-hidden="true"><use href="#i-menu"></use></svg>
         <svg class="ico ico-close" aria-hidden="true"><use href="#i-close"></use></svg>
@@ -111,9 +116,6 @@
 
 <!-- ═══════════════════ 1. HERO ═══════════════════ -->
 <section class="hero" id="home">
-  <span class="hero-glow" aria-hidden="true"></span>
-  <span class="hero-triangle" aria-hidden="true"></span>
-
   <div class="container-main hero-inner">
     <div class="hero-grid">
       <div class="hero-copy">
@@ -122,59 +124,50 @@
         <p class="hero-text" id="heroText"></p>
 
         <div class="hero-actions">
-          <button type="button" class="btn btn-gold btn-hero-booking" data-open-booking>
-            <span class="btn-ico"><svg class="ico" aria-hidden="true"><use href="#i-arrow-right"></use></svg></span>
+          <a class="btn btn-gold btn-hero-booking" id="heroWa" target="_blank" rel="noopener"
+             href="https://wa.me/6281320075918?text=Halo%20BUROQ%20TRANS,%20saya%20ingin%20konsultasi%20mengenai%20kebutuhan%20transportasi%20saya."
+             data-wa-message="Halo BUROQ TRANS, saya ingin konsultasi mengenai kebutuhan transportasi saya.">
+            <span class="btn-ico"><svg class="ico" aria-hidden="true"><use href="#i-whatsapp"></use></svg></span>
             <span>Konsultasikan Kebutuhan Anda</span>
-          </button>
+          </a>
           <a class="btn btn-ghost" href="#layanan">Lihat Layanan</a>
-        </div>
-
-        <div class="hero-arrows">
-          <button type="button" class="hero-arrow hero-prev" id="heroPrev" aria-label="Slide sebelumnya">
-            <svg class="ico" aria-hidden="true"><use href="#i-chevron-left"></use></svg>
-          </button>
-          <button type="button" class="hero-arrow hero-next" id="heroNext" aria-label="Slide berikutnya">
-            <svg class="ico" aria-hidden="true"><use href="#i-chevron-right"></use></svg>
-          </button>
         </div>
       </div>
 
       <div class="hero-visual">
-        <ul class="hero-badges" id="heroBadges"></ul>
         <div class="hero-cars" id="heroCars"></div>
       </div>
     </div>
 
-    <div class="hero-contact">
-      <div class="hc-item">
+    <ul class="hero-contact">
+      <li class="hc-item">
         <span class="hc-ico"><svg class="ico" aria-hidden="true"><use href="#i-whatsapp"></use></svg></span>
         <span class="hc-body">
-          <span class="hc-label is-gold">Konsultasi via WhatsApp</span>
-          <strong data-bind="phone"></strong>
+          <span class="hc-label">Konsultasi via WhatsApp</span>
+          <a class="hc-value" data-bind="phone"
+             data-wa-message="Halo BUROQ TRANS, saya ingin konsultasi mengenai kebutuhan transportasi saya."></a>
         </span>
-      </div>
-      <div class="hc-item">
+      </li>
+      <li class="hc-item">
         <span class="hc-ico"><svg class="ico" aria-hidden="true"><use href="#i-pin"></use></svg></span>
         <span class="hc-body">
-          <span class="hc-label">Alamat.</span>
-          <strong data-bind="city"></strong>
+          <span class="hc-label">Alamat</span>
+          <span class="hc-value" data-bind="city"></span>
         </span>
-      </div>
-      <div class="hc-item">
+      </li>
+      <li class="hc-item">
         <span class="hc-ico"><svg class="ico" aria-hidden="true"><use href="#i-clock"></use></svg></span>
         <span class="hc-body">
-          <span class="hc-label">Jam Layanan.</span>
-          <strong data-bind="hours"></strong>
+          <span class="hc-label">Jam Layanan</span>
+          <span class="hc-value" data-bind="hours"></span>
         </span>
-      </div>
-    </div>
+      </li>
+    </ul>
   </div>
 </section>
 
 <!-- ═══════════════════ 2. COMPANY INTRODUCTION ═══════════════════ -->
 <section class="about" id="tentang">
-  <span class="about-glow" aria-hidden="true"></span>
-
   <div class="container-main about-grid">
     <div class="about-copy">
       <p class="pill">
