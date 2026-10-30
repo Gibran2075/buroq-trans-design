@@ -7,6 +7,16 @@ transportasi perusahaan, logistik, dan transportasi projek.
 Desain mengacu pada file referensi `inspirasi/buroq1_inspiration.webp` — layout editorial asimetris,
 dekorasi bersudut diagonal, palet navy `#071B3D` + emas `#D9B52B` + putih.
 
+Situs terdiri dari satu beranda (dipertahankan apa adanya), halaman profil perusahaan,
+direktori layanan, dan tujuh halaman detail layanan:
+
+| URL | Isi |
+| --- | --- |
+| `/` | Beranda (12 section + modal booking & informasi) |
+| `/tentang-kami` | Profil perusahaan, layanan, kontak, sosial media, lokasi |
+| `/layanan` | Direktori tujuh layanan |
+| `/layanan/rental` · `antar-jemput` · `carter` · `pariwisata` · `perusahaan` · `logistik` · `projek` | Template detail layanan yang sama, diisi data per layanan |
+
 > Seluruh copy (hero → footer) sudah ditulis ulang mengikuti brief klien resmi. Nama lama
 > ("RA Putra Mandiri Transport", "RA Trans Group") dan fokus Surabaya / sewa mobil sudah
 > dihapus seluruhnya.
@@ -18,8 +28,8 @@ dekorasi bersudut diagonal, palet navy `#071B3D` + emas `#D9B52B` + putih.
 | Bagian | Teknologi |
 | --- | --- |
 | Struktur | HTML5 semantik |
-| Styling | CSS3 kustom (`css/style.css`) + **Tailwind CSS Play CDN** untuk utility |
-| Interaksi | Vanilla JavaScript (`js/data.js` + `js/main.js`) |
+| Styling | CSS3 kustom (`css/style.css` + `css/pages.css`) + **Tailwind CSS Play CDN** untuk utility (beranda) |
+| Interaksi | Vanilla JavaScript (`js/data.js`, `js/site-shell.js`, `js/main.js`, `js/pages.js`) |
 | Font | Google Fonts — Poppins (display) & Inter (body) |
 
 Tidak ada framework, tidak ada build step, tidak ada dependencies. Buka `index.html` langsung atau
@@ -62,12 +72,20 @@ npx serve .
 
 ```
 buroq-transport/
-├── index.html              # seluruh markup 14 section + modal booking & informasi
+├── index.html              # beranda: 12 section + modal booking & informasi
+├── tentang-kami/
+│   └── index.html          # /tentang-kami — profil, layanan, kontak, sosial, peta
+├── layanan/
+│   ├── index.html          # /layanan — direktori tujuh layanan
+│   └── <slug>/index.html   # /layanan/<slug> — tujuh halaman detail (shell tipis)
 ├── css/
-│   └── style.css           # token warna, shape/clip-path, tipografi, responsive
+│   ├── style.css           # token warna, shape/clip-path, tipografi, responsive
+│   └── pages.css           # dropdown Layanan, hero halaman dalam, template layanan, about
 ├── js/
-│   ├── data.js             # ★ SEMUA KONTEN BISNIS & PATH GAMBAR
-│   └── main.js             # render list, slider, modal, form, WhatsApp
+│   ├── data.js             # ★ SEMUA KONTEN BISNIS, KONTEN LAYANAN & PATH GAMBAR
+│   ├── site-shell.js       # header + dropdown Layanan + drawer + footer (semua halaman)
+│   ├── main.js             # beranda: hero, katalog, modal, form, WhatsApp
+│   └── pages.js            # render /layanan, /layanan/<slug>, /tentang-kami
 ├── assets/
 │   ├── brand/              # logo.svg, favicon.svg
 │   ├── vehicles/           # cutout kendaraan (PNG transparan)
@@ -82,7 +100,9 @@ dan seluruh `<img>` yang memakai `data-asset="…"` ikut berganti.
 
 ---
 
-## 4. Section (urutan, 14 bagian)
+## 4. Halaman & section
+
+### Beranda (`index.html`) — urutan 14 bagian
 
 1. Hero navy — headline komprehensif, slider manual 2 slide, strip kontak (WA / alamat / jam layanan)
 2. Pengantar **CV. EN BUROQ TRANSPORTASI** di bawah brand BUROQ TRANS + 4 atribut layanan faktual
@@ -99,10 +119,28 @@ dan seluruh `<img>` yang memakai `data-asset="…"` ikut berganti.
 13. "Solusi Transportasi untuk Berbagai Kebutuhan" — 3 kartu konten informatif + modal
 14. Footer navy (brand + nama hukum, menu, 7 layanan, kontak)
 
+### Halaman lain
+
+- `/tentang-kami` — hero + breadcrumb, sekilas perusahaan + kartu informasi (dari `CONFIG`),
+  tujuh layanan, kontak (empat nomor WhatsApp, email, jam layanan, alamat), sosial media yang
+  URL-nya terverifikasi, dan blok lokasi (iframe Google Maps hanya jika `CONFIG.mapsEmbedUrl` diisi).
+- `/layanan` — direktori tujuh layanan berisi kartu tautan ke halaman detail.
+- `/layanan/<slug>` — **satu template data-driven** (`js/pages.js`) untuk tujuh URL, diisi dari
+  `SERVICES[]`: breadcrumb + hero, deskripsi, daftar penggunaan, tiga manfaat, placeholder foto
+  16:9, layanan terkait, dan CTA WhatsApp dengan pesan berisi nama layanan.
+
+> Nested route memakai pola folder `index.html` (`layanan/rental/index.html`), sehingga
+> `/layanan/rental/` tetap terbuka saat di-refresh maupun diakses langsung pada static host.
+> Jika host memakai URL tanpa trailing slash, aktifkan redirect/rewrite ke `.../index.html`.
+
 ---
 
 ## 5. Interaksi yang sudah berjalan
 
+- Dropdown **Layanan** berisi "Semua Layanan" + tujuh layanan: hover di desktop, klik/tap tombol
+  chevron, `ArrowDown`/`ArrowUp` untuk berpindah item, `Esc` menutup dan mengembalikan fokus,
+  serta accordion di drawer mobile
+- Header + drawer + footer dirender sekali oleh `js/site-shell.js` untuk semua halaman
 - Menu mobile (slide-in + backdrop), scroll-spy navigasi aktif, smooth scroll antar section
 - Slider hero manual (panah kiri/kanan, tanpa autoplay)
 - Tombol **Konsultasikan Kebutuhan Anda / Tanya Layanan / Diskusikan Kebutuhan Perusahaan /
@@ -169,6 +207,8 @@ sosial media sudah sesuai brief resmi. Yang masih perlu konfirmasi:
 | 7 | Statistik operasional (jumlah unit, tahun berdiri, dsb.) | **tidak ditampilkan** — strip statistik diisi atribut layanan faktual | `STATS` |
 | 8 | Tahun copyright | `2026` | `index.html` footer bar |
 | 9 | Ketersediaan armada per layanan | hanya deskripsi umum, belum ada daftar unit | `SERVICES` |
+| 10 | URL embed Google Maps | belum ada — iframe disembunyikan, diganti alamat + tautan `mapsUrl` | `CONFIG.mapsEmbedUrl` |
+| 11 | Foto tiap layanan | placeholder 16:9 (`.service-photo` / `.svc-photo`) | `SERVICES[].photo` |
 
 Catatan tambahan:
 
@@ -182,7 +222,8 @@ Catatan tambahan:
 
 ## 8. Dukungan browser & responsive
 
-Diuji pada lebar **1440 / 1024 / 768 / 390 / 360 px**. Breakpoint utama: `1180`, `1023`, `767`, `479`.
+Diuji pada lebar **360 / 390 / 768 / 1023 / 1024 / 1280 / 1440 px** pada seluruh halaman
+(beranda, tentang kami, direktori layanan, tujuh halaman layanan). Breakpoint utama: `1180`, `1023`, `767`, `479`.
 
 - ≥ 1024 px — hero dua kolom, katalog layanan 4 kolom (baris kedua 3 kartu terpusat), footer 4 kolom
 - < 1024 px — menu jadi drawer slide-in, hero menumpuk vertikal, grid jadi 2 kolom
@@ -195,7 +236,8 @@ Diuji pada lebar **1440 / 1024 / 768 / 390 / 360 px**. Breakpoint utama: `1180`,
 
 - Landmark semantik (`header`/`main`/`section`/`footer`), `aria-label` pada kontrol ikon
 - `aria-expanded` pada tombol menu, `role="dialog"` + `aria-modal` pada modal
-- Fokus keyboard dipulihkan setelah modal ditutup, `Esc` menutup modal & menu
+- Fokus keyboard dipulihkan setelah modal ditutup, `Esc` menutup modal, dropdown & menu
+- Dropdown memakai `aria-expanded` + `aria-controls`; panah bawah membuka submenu dan memindahkan fokus
 - Semua `<img>` memakai `alt` deskriptif
 - Kontras teks putih di atas navy dan teks gelap di atas putih memenuhi ambang WCAG AA
 # buroq-trans-design

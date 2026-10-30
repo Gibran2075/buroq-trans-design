@@ -20,6 +20,11 @@ const CONFIG = {
 
   address: 'Jl Babakan Bandung RT 03/20 Kel Adiarsa Barat Citarum, Kec. Karawang Barat, Kab. Karawang',
   mapsUrl: 'https://maps.app.goo.gl/osvpvwVTCMCmgKmLA',
+  /* Embeddable Google Maps URL used by the Tentang Kami page. The client has
+     supplied a share link (mapsUrl) but no embed URL yet, so the iframe stays
+     hidden and the page shows the address plus a link to mapsUrl. Paste a URL
+     from Google Maps ("Share > Embed a map") here to switch the embed on. */
+  mapsEmbedUrl: '',
   hours: 'Senin\u2013Sabtu, 08.00\u201317.00 WIB',
 
   /* --- WhatsApp ----------------------------------------------------------
@@ -78,12 +83,16 @@ const ASSETS = {
 /* ---------------------------------------------------------------------------
    3. NAVIGATION
    --------------------------------------------------------------------------- */
+/* `href` values are relative to the site root, so the shared header can build
+   the right path from any page depth. On the homepage, links that point at
+   index.html are converted back into in-page anchors by js/site-shell.js.
+   The entry with `dropdown: 'services'` renders the seven-service menu. */
 const NAV_LINKS = [
-  { label: 'Beranda', href: '#home' },
-  { label: 'Tentang Kami', href: '#tentang' },
-  { label: 'Layanan', href: '#layanan' },
-  { label: 'Informasi', href: '#informasi' },
-  { label: 'Hubungi Kami', href: '#kontak' }
+  { key: 'home',     label: 'Beranda',      href: 'index.html' },
+  { key: 'about',    label: 'Tentang Kami', href: 'tentang-kami/' },
+  { key: 'services', label: 'Layanan',      href: 'layanan/', dropdown: 'services' },
+  { key: 'info',     label: 'Informasi',    href: 'index.html#informasi' },
+  { key: 'contact',  label: 'Hubungi Kami', href: 'index.html#kontak' }
 ];
 
 /* ---------------------------------------------------------------------------
@@ -126,6 +135,22 @@ const SERVICES = [
     icon: 'i-car',
     name: 'Rental Kendaraan',
     desc: 'Sewa kendaraan dengan masa penggunaan harian, mingguan, atau bulanan untuk kebutuhan pribadi maupun perusahaan.',
+    heroText: 'Sewa kendaraan untuk masa penggunaan harian, mingguan, atau bulanan, baik untuk perjalanan pribadi maupun kegiatan perusahaan.',
+    intro: [
+      'Rental kendaraan ditujukan untuk Anda yang membutuhkan kendaraan dalam periode tertentu tanpa perlu mengurus kendaraan sendiri. Lama penggunaan dapat disesuaikan, mulai dari kebutuhan beberapa hari hingga bulanan.',
+      'Jenis kendaraan, durasi pemakaian, dan area penggunaan dibahas terlebih dahulu agar kendaraan yang disiapkan sesuai dengan rencana perjalanan atau kegiatan Anda.'
+    ],
+    useCases: [
+      'Perjalanan dinas atau kunjungan kerja yang memerlukan kendaraan sendiri',
+      'Kebutuhan kendaraan sementara saat kendaraan utama tidak dapat digunakan',
+      'Mobilitas harian untuk kegiatan operasional perusahaan',
+      'Perjalanan keluarga dalam periode tertentu'
+    ],
+    benefits: [
+      { icon: 'i-clock', title: 'Durasi Fleksibel', text: 'Penggunaan harian, mingguan, atau bulanan sesuai kebutuhan Anda.' },
+      { icon: 'i-car', title: 'Pilihan Kendaraan', text: 'Jenis kendaraan dibahas bersama sebelum layanan disepakati.' },
+      { icon: 'i-users', title: 'Pribadi dan Perusahaan', text: 'Dapat digunakan untuk perjalanan pribadi maupun keperluan operasional perusahaan.' }
+    ],
     photo: ''
   },
   {
@@ -133,6 +158,22 @@ const SERVICES = [
     icon: 'i-users',
     name: 'Antar Jemput Karyawan',
     desc: 'Transportasi karyawan yang disusun mengikuti rute dan jam kerja perusahaan, dengan penekanan pada kenyamanan dan ketepatan waktu.',
+    heroText: 'Transportasi karyawan yang disusun mengikuti rute dan jam kerja perusahaan, dengan penekanan pada kenyamanan dan ketepatan waktu.',
+    intro: [
+      'Layanan antar jemput karyawan membantu perusahaan mengatur perpindahan karyawan dari titik jemput ke lokasi kerja dan sebaliknya. Rute dan jadwal disusun berdasarkan jam kerja serta lokasi yang dilalui.',
+      'Penyesuaian rute, titik jemput, dan jumlah penumpang dibahas bersama tim perusahaan agar kegiatan harian berjalan lebih tertib.'
+    ],
+    useCases: [
+      'Perusahaan dengan karyawan yang berangkat dan pulang pada jam yang sama',
+      'Lokasi kerja yang tidak terjangkau langsung oleh transportasi umum',
+      'Kebutuhan penjemputan rutin setiap hari kerja',
+      'Kegiatan perusahaan di luar jam kerja normal'
+    ],
+    benefits: [
+      { icon: 'i-clock', title: 'Mengikuti Jam Kerja', text: 'Jadwal keberangkatan dan penjemputan disesuaikan dengan jam operasional perusahaan.' },
+      { icon: 'i-pin', title: 'Rute yang Disepakati', text: 'Titik jemput dan jalur yang dilalui dibahas sebelum layanan dimulai.' },
+      { icon: 'i-users', title: 'Mobilitas Harian', text: 'Membantu perpindahan karyawan setiap hari kerja secara lebih teratur.' }
+    ],
     photo: ''
   },
   {
@@ -140,6 +181,22 @@ const SERVICES = [
     icon: 'i-pin',
     name: 'Carter Kendaraan',
     desc: 'Sewa kendaraan dengan rute dan durasi yang fleksibel untuk perjalanan dalam kota maupun luar kota.',
+    heroText: 'Sewa kendaraan dengan rute dan durasi yang fleksibel untuk perjalanan dalam kota maupun luar kota.',
+    intro: [
+      'Carter kendaraan digunakan untuk perjalanan dengan rute dan kegiatan tertentu. Anda dapat menyampaikan tujuan, urutan perjalanan, serta durasi yang dibutuhkan.',
+      'Rute, waktu penggunaan, dan titik antar dibahas agar kendaraan yang disiapkan sesuai dengan agenda perjalanan Anda.'
+    ],
+    useCases: [
+      'Kegiatan yang memerlukan beberapa titik tujuan dalam satu perjalanan',
+      'Acara keluarga atau komunitas dengan agenda tertentu',
+      'Kunjungan kerja ke beberapa lokasi',
+      'Perjalanan luar kota dengan waktu keberangkatan yang disepakati'
+    ],
+    benefits: [
+      { icon: 'i-pin', title: 'Rute Sesuai Agenda', text: 'Tujuan dan urutan perjalanan disusun mengikuti kegiatan Anda.' },
+      { icon: 'i-clock', title: 'Durasi Menyesuaikan', text: 'Waktu penggunaan kendaraan dibahas sesuai durasi kegiatan.' },
+      { icon: 'i-map', title: 'Dalam dan Luar Kota', text: 'Dapat digunakan untuk perjalanan di dalam kota maupun luar kota.' }
+    ],
     photo: ''
   },
   {
@@ -147,6 +204,22 @@ const SERVICES = [
     icon: 'i-ticket',
     name: 'Transportasi Pariwisata',
     desc: 'Kendaraan nyaman untuk perjalanan wisata keluarga, sekolah, komunitas, maupun rombongan perusahaan.',
+    heroText: 'Kendaraan untuk perjalanan wisata keluarga, sekolah, komunitas, maupun rombongan perusahaan.',
+    intro: [
+      'Perjalanan wisata biasanya melibatkan banyak peserta dan agenda yang sudah tersusun. Kami membantu menyiapkan kendaraan yang sesuai dengan jumlah penumpang dan rencana perjalanan rombongan.',
+      'Titik jemput, tujuan, serta jadwal perjalanan dibahas lebih awal agar rombongan tidak perlu mengatur kendaraan secara terpisah.'
+    ],
+    useCases: [
+      'Wisata keluarga besar atau komunitas',
+      'Kegiatan sekolah dan kunjungan belajar',
+      'Rombongan perusahaan untuk kegiatan bersama',
+      'Perjalanan beberapa hari dengan agenda yang telah tersusun'
+    ],
+    benefits: [
+      { icon: 'i-users', title: 'Untuk Rombongan', text: 'Keluarga, sekolah, komunitas, maupun rombongan perusahaan.' },
+      { icon: 'i-calendar', title: 'Jadwal Terencana', text: 'Tanggal dan agenda perjalanan dibahas lebih awal.' },
+      { icon: 'i-pin', title: 'Titik Jemput dan Antar', text: 'Titik jemput dan tujuan diatur sesuai rencana perjalanan.' }
+    ],
     photo: ''
   },
   {
@@ -154,6 +227,22 @@ const SERVICES = [
     icon: 'i-badge',
     name: 'Transportasi Perusahaan',
     desc: 'Mendukung operasional bisnis harian, termasuk perjalanan dinas, kunjungan kerja, rapat, dan mobilitas karyawan.',
+    heroText: 'Mendukung operasional bisnis harian, termasuk perjalanan dinas, kunjungan kerja, rapat, dan mobilitas karyawan.',
+    intro: [
+      'Kebutuhan transportasi perusahaan mencakup banyak kegiatan, mulai dari antar jemput karyawan hingga perjalanan dinas. Semuanya memerlukan pengaturan rute dan jadwal yang jelas.',
+      'Layanan dapat dibahas sesuai pola operasional perusahaan, termasuk kebutuhan kendaraan di luar kegiatan rutin.'
+    ],
+    useCases: [
+      'Perjalanan dinas dan kunjungan kerja',
+      'Rapat atau pertemuan di luar kantor',
+      'Mobilitas karyawan antar lokasi kerja',
+      'Kegiatan perusahaan yang memerlukan kendaraan tambahan'
+    ],
+    benefits: [
+      { icon: 'i-badge', title: 'Perjalanan Dinas', text: 'Kendaraan untuk kunjungan kerja dan kegiatan resmi perusahaan.' },
+      { icon: 'i-users', title: 'Mobilitas Karyawan', text: 'Mendukung perpindahan karyawan antar lokasi kerja.' },
+      { icon: 'i-layers', title: 'Pengaturan Terpusat', text: 'Kebutuhan transportasi perusahaan dibahas dalam satu koordinasi.' }
+    ],
     photo: ''
   },
   {
@@ -161,6 +250,22 @@ const SERVICES = [
     icon: 'i-truck',
     name: 'Transportasi Logistik',
     desc: 'Kendaraan untuk pengiriman dan distribusi barang, dengan pilihan kendaraan yang disesuaikan dengan jenis muatan.',
+    heroText: 'Kendaraan untuk pengiriman dan distribusi barang, dengan pilihan kendaraan yang disesuaikan dengan jenis muatan.',
+    intro: [
+      'Transportasi logistik berkaitan dengan pengiriman dan distribusi barang. Jenis kendaraan perlu disesuaikan dengan bentuk, volume, dan berat muatan.',
+      'Rute pengiriman, jadwal, serta titik bongkar muat dibahas bersama agar barang sampai sesuai rencana.'
+    ],
+    useCases: [
+      'Pengiriman barang antar gudang dan lokasi tujuan',
+      'Distribusi barang untuk kebutuhan operasional harian',
+      'Pengangkutan material dalam jumlah tertentu',
+      'Pengiriman berkala dengan jadwal yang disepakati'
+    ],
+    benefits: [
+      { icon: 'i-truck', title: 'Disesuaikan dengan Muatan', text: 'Jenis kendaraan dibahas mengikuti bentuk, volume, dan berat muatan.' },
+      { icon: 'i-map', title: 'Rute Pengiriman', text: 'Rute serta titik bongkar muat disepakati sebelum pengiriman.' },
+      { icon: 'i-calendar', title: 'Jadwal Berkala', text: 'Dapat digunakan untuk pengiriman rutin maupun berkala.' }
+    ],
     photo: ''
   },
   {
@@ -168,6 +273,22 @@ const SERVICES = [
     icon: 'i-hardhat',
     name: 'Transportasi Projek',
     desc: 'Transportasi khusus untuk mendukung operasional projek: mobilitas karyawan, perpindahan tim kerja, dan pengangkutan kebutuhan di lokasi projek.',
+    heroText: 'Transportasi khusus untuk mendukung operasional projek: mobilitas karyawan, perpindahan tim kerja, dan pengangkutan kebutuhan di lokasi projek.',
+    intro: [
+      'Operasional projek sering berlangsung di lokasi yang jauh dari pusat kota dan membutuhkan perpindahan orang maupun barang secara rutin.',
+      'Kebutuhan transportasi projek dapat dibahas mengikuti jadwal kerja, lokasi, serta jenis barang yang perlu dipindahkan.'
+    ],
+    useCases: [
+      'Perpindahan tim kerja ke dan dari lokasi projek',
+      'Pengangkutan peralatan dan kebutuhan kerja',
+      'Mobilitas karyawan di area projek',
+      'Kebutuhan transportasi tambahan pada tahap pekerjaan tertentu'
+    ],
+    benefits: [
+      { icon: 'i-hardhat', title: 'Mobilitas Tim Kerja', text: 'Perpindahan tim ke dan dari lokasi projek.' },
+      { icon: 'i-truck', title: 'Pengangkutan Kebutuhan', text: 'Peralatan dan kebutuhan kerja di lokasi projek.' },
+      { icon: 'i-clock', title: 'Jadwal Mengikuti Progres', text: 'Pengaturan jadwal disesuaikan dengan tahapan pekerjaan.' }
+    ],
     photo: ''
   }
 ];
@@ -313,8 +434,6 @@ const INFO_CARDS = [
 /* ---------------------------------------------------------------------------
    13. FOOTER LINK GROUPS & SOCIAL
    --------------------------------------------------------------------------- */
-const FOOTER_SERVICES = SERVICES.map((s) => s.name);
-
 /* Instagram and TikTok URLs are formed directly from the handles supplied by
    the client. Facebook: only a display name was supplied and no profile URL
    could be verified, so it is deliberately NOT linked. */

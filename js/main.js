@@ -69,62 +69,22 @@
     });
   };
 
-  /* ------------------------------------------------------------- navigation */
-  const navList = $('#navList');
-  const mainNav = $('#mainNav');
-  const navToggle = $('#navToggle');
-
-  if (navList) {
-    navList.innerHTML = (typeof NAV_LINKS !== 'undefined' ? NAV_LINKS : [])
-      .map((item) => '<li><a href="' + esc(item.href) + '">' + esc(item.label) + '</a></li>')
-      .join('');
-  }
-
-  const closeNav = () => {
-    if (!mainNav || !navToggle) return;
-    mainNav.classList.remove('is-open');
-    navToggle.setAttribute('aria-expanded', 'false');
-    navToggle.setAttribute('aria-label', 'Buka menu navigasi');
-    if (navBackdrop) navBackdrop.classList.remove('is-open');
-    document.body.classList.remove('is-locked');
-  };
-
-  const navBackdrop = $('#navBackdrop');
-
-  if (navToggle && mainNav) {
-    navToggle.addEventListener('click', () => {
-      const open = !mainNav.classList.contains('is-open');
-      mainNav.classList.toggle('is-open', open);
-      navToggle.setAttribute('aria-expanded', String(open));
-      navToggle.setAttribute('aria-label', open ? 'Tutup menu navigasi' : 'Buka menu navigasi');
-      if (navBackdrop) navBackdrop.classList.toggle('is-open', open);
-      document.body.classList.toggle('is-locked', open);
-    });
-    if (navBackdrop) navBackdrop.addEventListener('click', closeNav);
-  }
-
-  /* the header toggle is covered by the open drawer, so the drawer carries its
-     own close control and hands focus back to the toggle */
-  const navClose = $('#navClose');
-  if (navClose) {
-    navClose.addEventListener('click', () => {
-      closeNav();
-      if (navToggle) navToggle.focus();
-    });
-  }
-
-  /* ------------------------------------------------------- header + spy */
+  /* ------------------------------------------------------- scroll spy */
+  /* The header, its drawer and the footer are rendered by js/site-shell.js.
+     Here we only highlight the in-page anchors of the homepage while scrolling. */
   const siteHeader = $('#siteHeader');
   const onScroll = () => {
-    if (siteHeader) siteHeader.classList.toggle('is-stuck', window.scrollY > 90);
-
     const probe = window.scrollY + (siteHeader ? siteHeader.offsetHeight : 80) + 30;
     let current = null;
     $$('main section[id], footer[id]').forEach((sec) => {
       if (sec.offsetTop <= probe) current = sec.id;
     });
     $$('#navList a').forEach((a) => {
-      a.classList.toggle('is-active', a.getAttribute('href') === '#' + current);
+      const target = a.getAttribute('href') || '';
+      /* cross-page links keep the active state assigned by the shell */
+      if (target.charAt(0) === '#') {
+        a.classList.toggle('is-active', target === '#' + current);
+      }
     });
   };
   window.addEventListener('scroll', onScroll, { passive: true });
@@ -136,7 +96,6 @@
       const target = $(anchor.getAttribute('href'));
       if (target) {
         e.preventDefault();
-        closeNav();
         const top = target.getBoundingClientRect().top + window.scrollY - 84;
         window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
       }
@@ -190,7 +149,6 @@
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
     closeModal();
-    closeNav();
   });
 
   /* ================================ HERO ================================ */
@@ -407,63 +365,6 @@
     openModal(infoModal, trigger);
   });
 
-  /* =============================== FOOTER =============================== */
-  const renderFooter = () => {
-    const menu = $('#footerMenu');
-    if (menu) {
-      menu.innerHTML = (typeof NAV_LINKS !== 'undefined' ? NAV_LINKS : [])
-        .map((i) => '<li><a href="' + esc(i.href) + '">' + esc(i.label) + '</a></li>')
-        .join('');
-    }
-
-    const services = $('#footerServices');
-    if (services) {
-      services.innerHTML = (typeof FOOTER_SERVICES !== 'undefined' ? FOOTER_SERVICES : [])
-        .map((name) => '<li><a href="#layanan">' + esc(name) + '</a></li>')
-        .join('');
-    }
-
-    const social = $('#footerSocial');
-    if (social) {
-      social.innerHTML = (typeof SOCIAL_LINKS !== 'undefined' ? SOCIAL_LINKS : [])
-        .map((s) => {
-          const aria = s.label + ' ' + s.handle;
-          return s.url
-            ? '<li><a href="' + esc(s.url) + '" target="_blank" rel="noopener" aria-label="' + esc(aria) + '">' +
-              icon(s.icon) + '</a></li>'
-            : '<li><span class="is-unlinked" role="img" aria-label="' + esc(aria) + '">' +
-              icon(s.icon) + '</span></li>';
-        })
-        .join('');
-      const note = $('#socialNote');
-      if (note) {
-        note.textContent = (typeof SOCIAL_LINKS !== 'undefined' ? SOCIAL_LINKS : [])
-          .map((s) => s.label + ' ' + s.handle)
-          .join('  ·  ');
-      }
-    }
-
-    const contact = $('#footerContact');
-    if (contact) {
-      const genericMsg = 'Halo BUROQ TRANS, saya ingin bertanya mengenai layanan transportasi yang tersedia.';
-      const rows = (typeof CONTACTS !== 'undefined' ? CONTACTS : [])
-        .map((c) =>
-          '<li>' + icon('i-phone') +
-          '<a href="' + esc(waLink(c.wa, genericMsg)) + '" target="_blank" rel="noopener">' +
-          esc(c.label) + '</a></li>'
-        );
-      rows.push('<li>' + icon('i-mail') + '<a href="mailto:' + esc(CONFIG.email) + '">' + esc(CONFIG.email) + '</a></li>');
-      rows.push('<li>' + icon('i-clock') + '<span>' + esc(CONFIG.hours) + '</span></li>');
-      if (CONFIG.mapsUrl) {
-        rows.push('<li>' + icon('i-pin') + '<a href="' + esc(CONFIG.mapsUrl) +
-          '" target="_blank" rel="noopener">' + esc(CONFIG.address) + '</a></li>');
-      } else {
-        rows.push('<li>' + icon('i-pin') + '<span>' + esc(CONFIG.address) + '</span></li>');
-      }
-      contact.innerHTML = rows.join('');
-    }
-  };
-
   /* ============================ BOOKING FORM ============================ */
   const bookingModal = $('#bookingModal');
   const bookingForm = $('#bookingForm');
@@ -650,7 +551,6 @@
   renderNeeds();
   renderSteps();
   renderInfo();
-  renderFooter();
   onScroll();
 
   window.addEventListener('load', () => {
