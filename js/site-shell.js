@@ -115,7 +115,10 @@
   };
 
   const renderHeader = (mount) => {
-    const items = (typeof NAV_LINKS !== 'undefined' ? NAV_LINKS : []).map(navItem).join('');
+    const items = (typeof NAV_LINKS !== 'undefined' ? NAV_LINKS : [])
+      .filter((i) => i.header !== false)
+      .map(navItem)
+      .join('');
 
     mount.innerHTML =
       '<header class="site-header" id="siteHeader">' +

@@ -86,13 +86,14 @@ const ASSETS = {
 /* `href` values are relative to the site root, so the shared header can build
    the right path from any page depth. On the homepage, links that point at
    index.html are converted back into in-page anchors by js/site-shell.js.
-   The entry with `dropdown: 'services'` renders the seven-service menu. */
+   The entry with `dropdown: 'services'` renders the seven-service menu.
+   `header: false` keeps a link in the footer menu but out of the main navbar. */
 const NAV_LINKS = [
   { key: 'home',     label: 'Beranda',      href: 'index.html' },
   { key: 'about',    label: 'Tentang Kami', href: 'tentang-kami/' },
   { key: 'services', label: 'Layanan',      href: 'layanan/', dropdown: 'services' },
-  { key: 'info',     label: 'Informasi',    href: 'index.html#informasi' },
-  { key: 'contact',  label: 'Hubungi Kami', href: 'index.html#kontak' }
+  { key: 'info',     label: 'Informasi',    href: 'index.html#informasi', header: false },
+  { key: 'contact',  label: 'Hubungi Kami', href: 'index.html#kontak',    header: false }
 ];
 
 /* ---------------------------------------------------------------------------
