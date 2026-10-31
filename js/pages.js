@@ -298,24 +298,37 @@
         : '<p class="social-empty">Sosial media belum tersedia.</p>';
     }
 
-    /* the embed only exists once a real maps embed URL is configured */
+    /* lokasi: peta embed + alamat + tombol yang membuka rute ke kantor.
+       Tanpa embed, panel jadi kartu alamat dengan tautan yang sama. */
     const map = document.getElementById('aboutMap');
     if (map) {
+      const mapsLink = CONFIG.directionsUrl || CONFIG.mapsUrl || '';
+      const openBtn = mapsLink
+        ? '<a class="btn btn-gold map-open" href="' + esc(mapsLink) +
+          '" target="_blank" rel="noopener">' + icon('i-arrow-ur') +
+          '<span>Buka di Google Maps</span></a>'
+        : '';
+
       if (CONFIG.mapsEmbedUrl) {
         map.innerHTML =
-          '<iframe src="' + esc(CONFIG.mapsEmbedUrl) + '" title="' +
-          esc('Lokasi ' + CONFIG.businessName + ' di ' + CONFIG.city) + '" loading="lazy" ' +
-          'allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>';
+          '<div class="map-live">' +
+            '<iframe src="' + esc(CONFIG.mapsEmbedUrl) + '" title="' +
+            esc('Peta lokasi ' + CONFIG.businessName + ', ' + CONFIG.address) +
+            '" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>' +
+          '</div>' +
+          '<div class="map-bar">' +
+            '<span class="map-bar-info">' + icon('i-pin') +
+              '<span>' + esc(CONFIG.address) + '</span>' +
+            '</span>' +
+            openBtn +
+          '</div>';
       } else {
         map.innerHTML =
           '<div class="map-slot">' +
             '<span class="map-slot-ico">' + icon('i-map') + '</span>' +
             '<h3 class="h3">Lokasi ' + esc(CONFIG.businessName) + '</h3>' +
             '<p class="body-text">' + esc(CONFIG.address) + '</p>' +
-            (CONFIG.mapsUrl
-              ? '<a class="btn btn-outline-dark" href="' + esc(CONFIG.mapsUrl) +
-                '" target="_blank" rel="noopener">' + icon('i-arrow-ur') + '<span>Buka di Google Maps</span></a>'
-              : '') +
+            openBtn +
             '<p class="map-slot-note">Peta interaktif akan ditampilkan di sini setelah tautan lokasi tersedia.</p>' +
           '</div>';
       }

@@ -12,19 +12,29 @@
 /* ---------------------------------------------------------------------------
    1. CONFIGURATION  (used by js/main.js)
    --------------------------------------------------------------------------- */
+/* alamat kantor — satu sumber kebenaran untuk seluruh situs (hero, footer,
+   kartu informasi, peta embed, dan tombol rute Google Maps) */
+const COMPANY_ADDRESS =
+  'Jl Babakan Bandung RT 03/20 Kel Adiarsa Barat Citarum, Kec. Karawang Barat, Kab. Karawang';
+
 const CONFIG = {
   businessName: 'BUROQ TRANS',
   legalName: 'CV. EN BUROQ TRANSPORTASI',
   tagline: 'Solusi Transportasi',
   city: 'Karawang',
 
-  address: 'Jl Babakan Bandung RT 03/20 Kel Adiarsa Barat Citarum, Kec. Karawang Barat, Kab. Karawang',
+  address: COMPANY_ADDRESS,
+  /* strip kontak hero: versi ringkas alamat (jalan + kota) supaya tetap terbaca
+     di ruang sempit; alamat lengkap tetap ada di `address` di atas. */
+  cityAddress: 'Jl Babakan Bandung RT 03/20 Kel Adiarsa Barat Citarum, Karawang',
   mapsUrl: 'https://maps.app.goo.gl/osvpvwVTCMCmgKmLA',
-  /* Embeddable Google Maps URL used by the Tentang Kami page. The client has
-     supplied a share link (mapsUrl) but no embed URL yet, so the iframe stays
-     hidden and the page shows the address plus a link to mapsUrl. Paste a URL
-     from Google Maps ("Share > Embed a map") here to switch the embed on. */
-  mapsEmbedUrl: '',
+  /* Peta halaman Tentang Kami: embed Google Maps tanpa API key, dibangun dari
+     alamat kantor sehingga ikut berubah otomatis bila alamat diperbarui. */
+  mapsEmbedUrl: 'https://maps.google.com/maps?q=' + encodeURIComponent(COMPANY_ADDRESS) +
+    '&z=17&hl=id&iwloc=B&output=embed',
+  /* Tombol "Buka di Google Maps" — membuka navigasi/rute langsung ke kantor. */
+  directionsUrl: 'https://www.google.com/maps/dir/?api=1&destination=' +
+    encodeURIComponent(COMPANY_ADDRESS),
   hours: 'Senin\u2013Sabtu, 08.00\u201317.00 WIB',
 
   /* --- WhatsApp ----------------------------------------------------------

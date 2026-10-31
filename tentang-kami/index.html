@@ -40,7 +40,7 @@
       </p>
       <ul class="hero-chips">
         <li><svg class="ico" aria-hidden="true"><use href="#i-badge"></use></svg> <span data-bind="legalName"></span></li>
-        <li><svg class="ico" aria-hidden="true"><use href="#i-pin"></use></svg> Karawang, Jawa Barat</li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-pin"></use></svg> <span data-bind="cityAddress"></span></li>
         <li><svg class="ico" aria-hidden="true"><use href="#i-clock"></use></svg> <span data-bind="hours"></span></li>
       </ul>
     </div>
@@ -82,10 +82,6 @@
             <dd>BUROQ TRANS</dd>
           </div>
           <div>
-            <dt>Wilayah layanan</dt>
-            <dd>Karawang, Jawa Barat</dd>
-          </div>
-          <div>
             <dt>Jam layanan</dt>
             <dd><span data-bind="hours"></span></dd>
           </div>
@@ -98,37 +94,9 @@
     </div>
   </section>
 
-  <section class="page-section page-section--surface">
-    <div class="container-main">
-      <div class="page-head center-head">
-        <p class="eyebrow">LAYANAN KAMI</p>
-        <h2 class="h2">Tujuh Layanan Transportasi</h2>
-        <p class="body-text">
-          Layanan yang dapat dipilih sesuai kebutuhan perjalanan, operasional bisnis, maupun
-          kegiatan perusahaan Anda.
-        </p>
-      </div>
-
-      <div class="svc-grid" id="aboutServices">
-        <noscript>
-          <p class="body-text">
-            Layanan BUROQ TRANS: Rental Kendaraan, Antar Jemput Karyawan, Carter Kendaraan,
-            Transportasi Pariwisata, Transportasi Perusahaan, Transportasi Logistik, dan
-            Transportasi Projek.
-          </p>
-        </noscript>
-      </div>
-
-      <div class="section-cta">
-        <a class="btn btn-outline-dark" href="../layanan/">
-          Lihat semua layanan
-          <svg class="ico" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <section class="page-section" id="kontak-perusahaan">
+  <!-- Kontak & lokasi sengaja berada tepat di bawah sekilas perusahaan;
+       latar surface menjaga pemisahan visual dari section putih di atasnya. -->
+  <section class="page-section page-section--surface" id="kontak-perusahaan">
     <div class="container-main">
       <div class="page-head">
         <p class="eyebrow">KONTAK &amp; LOKASI</p>
@@ -174,6 +142,36 @@
             </p>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section">
+    <div class="container-main">
+      <div class="page-head center-head">
+        <p class="eyebrow">LAYANAN KAMI</p>
+        <h2 class="h2">Tujuh Layanan Transportasi</h2>
+        <p class="body-text">
+          Layanan yang dapat dipilih sesuai kebutuhan perjalanan, operasional bisnis, maupun
+          kegiatan perusahaan Anda.
+        </p>
+      </div>
+
+      <div class="svc-grid" id="aboutServices">
+        <noscript>
+          <p class="body-text">
+            Layanan BUROQ TRANS: Rental Kendaraan, Antar Jemput Karyawan, Carter Kendaraan,
+            Transportasi Pariwisata, Transportasi Perusahaan, Transportasi Logistik, dan
+            Transportasi Projek.
+          </p>
+        </noscript>
+      </div>
+
+      <div class="section-cta">
+        <a class="btn btn-outline-dark" href="../layanan/">
+          Lihat semua layanan
+          <svg class="ico" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+        </a>
       </div>
     </div>
   </section>

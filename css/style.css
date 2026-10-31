@@ -331,7 +331,9 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold-light); outl
 /* ---- bottom information strip: three compact, factual groups ---- */
 .hero-contact{
   flex:none;
-  display:grid; grid-template-columns:repeat(3,minmax(0,1fr));
+  display:grid;
+  /* kolom alamat lebih lebar: alamat jalan + kota butuh ruang untuk 2 baris */
+  grid-template-columns:minmax(0,.95fr) minmax(0,1.3fr) minmax(0,1fr);
   gap:clamp(16px,2.4vw,36px);
   padding-top:clamp(14px,2.2vh,22px);
   border-top:1px solid rgba(255,255,255,.14);
@@ -352,6 +354,13 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold-light); outl
 .hc-value{
   font-family:Poppins,sans-serif; font-size:clamp(14px,1.1vw,15.5px);
   font-weight:600; color:#fff;
+}
+/* alamat hero: teks panjang — ukuran sedikit dikecilkan, line-height longgar
+   dan boleh pindah baris agar tetap enak dibaca di strip kontak */
+.hc-value--address{
+  font-size:clamp(12.5px,.95vw,14.5px);
+  font-weight:500; line-height:1.5; color:#D9E1F1;
+  overflow-wrap:break-word;
 }
 a.hc-value:hover{ color:var(--gold-light) }
 

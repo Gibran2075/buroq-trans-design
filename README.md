@@ -122,8 +122,9 @@ dan seluruh `<img>` yang memakai `data-asset="…"` ikut berganti.
 ### Halaman lain
 
 - `/tentang-kami` — hero + breadcrumb, sekilas perusahaan + kartu informasi (dari `CONFIG`),
-  tujuh layanan, kontak (empat nomor WhatsApp, email, jam layanan, alamat), sosial media yang
-  URL-nya terverifikasi, dan blok lokasi (iframe Google Maps hanya jika `CONFIG.mapsEmbedUrl` diisi).
+  **kontak & lokasi** (empat nomor WhatsApp, email, jam layanan, alamat, sosial media yang
+  URL-nya terverifikasi, peta Google Maps embed + tombol "Buka di Google Maps"), lalu tujuh
+  layanan, dan CTA penutup.
 - `/layanan` — direktori tujuh layanan berisi kartu tautan ke halaman detail.
 - `/layanan/<slug>` — **satu template data-driven** (`js/pages.js`) untuk tujuh URL, diisi dari
   `SERVICES[]`: breadcrumb + hero, deskripsi, daftar penggunaan, tiga manfaat, placeholder foto
@@ -208,7 +209,7 @@ sosial media sudah sesuai brief resmi. Yang masih perlu konfirmasi:
 | 7 | Statistik operasional (jumlah unit, tahun berdiri, dsb.) | **tidak ditampilkan** — strip statistik diisi atribut layanan faktual | `STATS` |
 | 8 | Tahun copyright | `2026` | `index.html` footer bar |
 | 9 | Ketersediaan armada per layanan | hanya deskripsi umum, belum ada daftar unit | `SERVICES` |
-| 10 | URL embed Google Maps | belum ada — iframe disembunyikan, diganti alamat + tautan `mapsUrl` | `CONFIG.mapsEmbedUrl` |
+| 10 | URL embed Google Maps | **sudah aktif** — embed tanpa API key dibangun otomatis dari `COMPANY_ADDRESS`; tombol arah memakai `CONFIG.directionsUrl` | `CONFIG.mapsEmbedUrl` / `CONFIG.directionsUrl` |
 | 11 | Foto tiap layanan | placeholder 16:9 (`.service-photo` / `.svc-photo`) | `SERVICES[].photo` |
 
 Catatan tambahan:

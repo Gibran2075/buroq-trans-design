@@ -313,10 +313,24 @@ a.c-value:hover{ color:#B99212 }
 .social-empty{ margin-top:8px; font-size:13px; color:var(--muted) }
 
 .map-panel{
-  display:flex; min-height:340px; overflow:hidden;
-  border:1px solid var(--line); border-radius:16px; background:var(--surface);
+  display:flex; flex-direction:column; min-height:340px; overflow:hidden;
+  border:1px solid var(--line); border-radius:16px; background:#fff;
+  box-shadow:var(--shadow-card);
 }
-.map-panel iframe{ width:100%; min-height:340px; border:0; display:block }
+.map-live{ flex:1 1 auto; display:flex; min-height:340px; background:#E7ECF3 }
+.map-live iframe{ width:100%; min-height:340px; border:0; display:block; flex:1 1 auto }
+/* bar di bawah peta: alamat + tombol rute ke kantor */
+.map-bar{
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between;
+  gap:12px 18px; padding:14px 18px; background:#fff; border-top:1px solid var(--line);
+}
+.map-bar-info{
+  display:flex; align-items:flex-start; gap:9px; flex:1 1 220px; min-width:0;
+  font-size:12.8px; line-height:1.6; color:#4E5B72; overflow-wrap:anywhere;
+}
+.map-bar-info .ico{ width:16px; height:16px; margin-top:4px; color:var(--gold); flex:none }
+.map-open{ height:44px; padding:0 18px; font-size:12px; gap:8px }
+.map-open .ico{ width:15px; height:15px }
 .map-slot{
   display:flex; flex-direction:column; align-items:flex-start; justify-content:center;
   gap:12px; padding:clamp(24px,3vw,34px); width:100%;
@@ -341,7 +355,7 @@ a.c-value:hover{ color:#B99212 }
   .about-intro{ grid-template-columns:minmax(0,1fr) }
   .contact-grid{ grid-template-columns:minmax(0,1fr) }
   .map-panel{ min-height:300px }
-  .map-panel iframe{ min-height:300px }
+  .map-live, .map-live iframe{ min-height:300px }
 }
 
 @media (max-width:767px){
@@ -359,6 +373,8 @@ a.c-value:hover{ color:#B99212 }
   .aside-card .btn{ font-size:11.6px }
   .cta-band h2{ font-size:clamp(22px,6vw,28px) }
   .map-slot .btn{ width:100%; justify-content:center }
+  .map-bar{ padding:14px 16px }
+  .map-open{ width:100%; justify-content:center }
 }
 
 @media (max-width:479px){
