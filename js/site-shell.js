@@ -31,7 +31,7 @@
     number ? 'https://wa.me/' + number + '?text=' + encodeURIComponent(text) : '';
 
   const GENERAL_WA = 'Halo BUROQ TRANS, saya ingin konsultasi mengenai kebutuhan transportasi saya.';
-  const logo = url((typeof ASSETS !== 'undefined' && ASSETS.brand && ASSETS.brand.logo) || 'assets/brand/logo.svg');
+  const logo = url((typeof ASSETS !== 'undefined' && ASSETS.brand && ASSETS.brand.logo) || 'assets/brand/logoburoq.png');
 
   /* On the homepage, links that point at index.html stay in-page anchors so the
      existing smooth scrolling keeps working. Elsewhere they become real URLs. */

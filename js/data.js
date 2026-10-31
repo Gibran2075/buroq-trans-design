@@ -59,7 +59,7 @@ const CONTACTS = [
    --------------------------------------------------------------------------- */
 const ASSETS = {
   brand: {
-    logo: 'assets/brand/logo.svg'
+    logo: 'assets/brand/logoburoq.png'
   },
 
   vehicles: {

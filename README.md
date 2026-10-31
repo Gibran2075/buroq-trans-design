@@ -87,7 +87,7 @@ buroq-transport/
 │   ├── main.js             # beranda: hero, katalog, modal, form, WhatsApp
 │   └── pages.js            # render /layanan, /layanan/<slug>, /tentang-kami
 ├── assets/
-│   ├── brand/              # logo.svg, favicon.svg
+│   ├── brand/              # logoburoq.png (logo resmi klien), favicon.svg, logo.svg (placeholder lama)
 │   ├── vehicles/           # cutout kendaraan (PNG transparan)
 │   └── photos/             # foto jalur tol, kawasan perkantoran, konten informasi
 └── README.md
@@ -183,7 +183,8 @@ Jika `CONFIG.whatsapp` dikosongkan:
 | `assets/photos/info-company.jpg` — panorama kota | Wikimedia Commons, `File:Jakarta Panorama.jpg` | Lisensi bebas |
 | `assets/photos/info-group.jpg` — bus pariwisata | Wikimedia Commons, `File:Bus pariwisata tentrem.jpg` | CC BY-SA 4.0 |
 | `assets/photos/info-logistik.jpg` — truk logistik | Wikimedia Commons, `File:Hacaca Logistics Hino 500 Ranger (B 9498 FEH).jpg` | CC BY-SA 4.0 |
-| Logo & favicon (`assets/brand/*.svg`) | Dibuat khusus untuk prototipe ini | Bukan logo resmi perusahaan. |
+| Logo resmi klien (`assets/brand/logoburoq.png`) | Disediakan klien | Logo hijau asli dipakai apa adanya; ditampilkan di atas *plate* putih bercincin emas agar tidak bertabrakan dengan palet navy–gold. |
+| Favicon (`assets/brand/favicon.svg`) | Turunan dari logo resmi klien | Ikon hijau di dalam kotak navy bercincin emas. `logo.svg` hanya placeholder lama, tidak lagi dipakai. |
 
 Rincian per-file juga tersimpan di `assets/photos/credits.json`. Semua berkas gambar yang dirujuk
 markup sudah ada di repo — tidak ada placeholder atau broken image. Foto dipakai sebagai
