@@ -63,20 +63,19 @@ const ASSETS = {
   },
 
   vehicles: {
+    heroTrio: 'assets/photos/herosection.webp',   // hero composition (three vehicles)
     heroWhite: 'assets/vehicles/suv-white.png',   // white SUV (hero / closing)
     heroBlack: 'assets/vehicles/suv-black.png',   // dark SUV (hero / banner)
     heroMpv: 'assets/vehicles/mpv-luxury.png',    // luxury MPV (hero / banner)
-    whiteAlt: 'assets/vehicles/suv-white-2.png',  // white SUV (hero slide 2)
-    blackAlt: 'assets/vehicles/suv-black-2.png',  // dark SUV (service intro)
+    whiteAlt: 'assets/vehicles/avanza.webp',      // Toyota Avanza (about section)
+    blackAlt: 'assets/vehicles/innova.webp',      // Toyota Innova (about section)
+    truck: 'assets/vehicles/canter.webp',         // box truck (service intro)
     van: 'assets/vehicles/van-white.png'          // people carrier (use case)
   },
 
   photos: {
     about: 'assets/photos/about.jpg',             // toll road corridor
-    corp: 'assets/photos/corp.jpg',               // business district
-    infoCompany: 'assets/photos/info-company.jpg',
-    infoGroup: 'assets/photos/info-group.jpg',
-    infoLogistik: 'assets/photos/info-logistik.jpg'
+    corp: 'assets/photos/corp.jpg'                // business district
   }
 };
 
@@ -92,7 +91,6 @@ const NAV_LINKS = [
   { key: 'home',     label: 'Beranda',      href: 'index.html' },
   { key: 'about',    label: 'Tentang Kami', href: 'tentang-kami/' },
   { key: 'services', label: 'Layanan',      href: 'layanan/', dropdown: 'services' },
-  { key: 'info',     label: 'Informasi',    href: 'index.html#informasi', header: false },
   { key: 'contact',  label: 'Hubungi Kami', href: 'index.html#kontak',    header: false }
 ];
 
@@ -105,8 +103,8 @@ const HERO = {
   title: 'Solusi {gold:Transportasi Andal} untuk Setiap Kebutuhan',
   text: 'Dari rental kendaraan dan antar-jemput karyawan hingga kebutuhan transportasi perusahaan dan logistik proyek, Buroq Trans siap membantu perjalanan Anda dengan solusi yang dapat disesuaikan.',
   vehicle: {
-    asset: 'heroMpv',
-    alt: 'Kendaraan penumpang BUROQ TRANS untuk transportasi perusahaan dan antar-jemput karyawan'
+    asset: 'heroTrio',
+    alt: 'Tiga armada kendaraan BUROQ TRANS untuk transportasi perusahaan dan antar-jemput karyawan'
   }
 };
 
@@ -125,10 +123,9 @@ const STATS = [
       Descriptions follow the client brief \u2014 wording may be polished,
       meaning must not change.
 
-      `photo` stays empty until the client supplies real photos. An empty value
-      renders a 16:9 placeholder with the same dimensions the photo will use, so
-      filling this field (e.g. 'assets/photos/layanan-rental.jpg') is the only
-      change needed later \u2014 the card layout does not change.
+      `photo` holds the unit photo for each service (cards, directory and
+      detail hero all read it). Leaving it empty renders the 16:9 placeholder
+      instead \u2014 the card layout does not change.
    --------------------------------------------------------------------------- */
 const SERVICES = [
   {
@@ -152,7 +149,7 @@ const SERVICES = [
       { icon: 'i-car', title: 'Pilihan Kendaraan', text: 'Jenis kendaraan dibahas bersama sebelum layanan disepakati.' },
       { icon: 'i-users', title: 'Pribadi dan Perusahaan', text: 'Dapat digunakan untuk perjalanan pribadi maupun keperluan operasional perusahaan.' }
     ],
-    photo: ''
+    photo: 'assets/penumpang/all_new_innova.webp'
   },
   {
     id: 'antar-jemput',
@@ -175,7 +172,7 @@ const SERVICES = [
       { icon: 'i-pin', title: 'Rute yang Disepakati', text: 'Titik jemput dan jalur yang dilalui dibahas sebelum layanan dimulai.' },
       { icon: 'i-users', title: 'Mobilitas Harian', text: 'Membantu perpindahan karyawan setiap hari kerja secara lebih teratur.' }
     ],
-    photo: ''
+    photo: 'assets/penumpang/elf.webp'
   },
   {
     id: 'carter',
@@ -198,7 +195,7 @@ const SERVICES = [
       { icon: 'i-clock', title: 'Durasi Menyesuaikan', text: 'Waktu penggunaan kendaraan dibahas sesuai durasi kegiatan.' },
       { icon: 'i-map', title: 'Dalam dan Luar Kota', text: 'Dapat digunakan untuk perjalanan di dalam kota maupun luar kota.' }
     ],
-    photo: ''
+    photo: 'assets/penumpang/hino.webp'
   },
   {
     id: 'pariwisata',
@@ -221,7 +218,7 @@ const SERVICES = [
       { icon: 'i-calendar', title: 'Jadwal Terencana', text: 'Tanggal dan agenda perjalanan dibahas lebih awal.' },
       { icon: 'i-pin', title: 'Titik Jemput dan Antar', text: 'Titik jemput dan tujuan diatur sesuai rencana perjalanan.' }
     ],
-    photo: ''
+    photo: 'assets/penumpang/elf.webp'
   },
   {
     id: 'perusahaan',
@@ -244,7 +241,7 @@ const SERVICES = [
       { icon: 'i-users', title: 'Mobilitas Karyawan', text: 'Mendukung perpindahan karyawan antar lokasi kerja.' },
       { icon: 'i-layers', title: 'Pengaturan Terpusat', text: 'Kebutuhan transportasi perusahaan dibahas dalam satu koordinasi.' }
     ],
-    photo: ''
+    photo: 'assets/penumpang/vellfire.webp'
   },
   {
     id: 'logistik',
@@ -267,7 +264,7 @@ const SERVICES = [
       { icon: 'i-map', title: 'Rute Pengiriman', text: 'Rute serta titik bongkar muat disepakati sebelum pengiriman.' },
       { icon: 'i-calendar', title: 'Jadwal Berkala', text: 'Dapat digunakan untuk pengiriman rutin maupun berkala.' }
     ],
-    photo: ''
+    photo: 'assets/logistik/granmax.webp'
   },
   {
     id: 'projek',
@@ -290,7 +287,7 @@ const SERVICES = [
       { icon: 'i-truck', title: 'Pengangkutan Kebutuhan', text: 'Peralatan dan kebutuhan kerja di lokasi projek.' },
       { icon: 'i-clock', title: 'Jadwal Mengikuti Progres', text: 'Pengaturan jadwal disesuaikan dengan tahapan pekerjaan.' }
     ],
-    photo: ''
+    photo: 'assets/logistik/isuzu_elf_bak.webp'
   }
 ];
 
@@ -331,56 +328,7 @@ const CORP_FEATURES = [
 ];
 
 /* ---------------------------------------------------------------------------
-   9. SERVICE USE CASES
-      No invented prices, durations, itineraries or fixed routes.
-   --------------------------------------------------------------------------- */
-const USE_CASES = [
-  {
-    id: 'rombongan',
-    category: 'Untuk Keluarga & Rombongan',
-    title: 'Perjalanan Keluarga dan Rombongan',
-    text: 'Perjalanan bersama keluarga, sekolah, komunitas, maupun rombongan perusahaan memerlukan kendaraan dan jadwal yang terkoordinasi. Kami membantu menyesuaikan jenis kendaraan serta titik jemput dan antar sesuai kebutuhan rombongan Anda.',
-    vehicle: 'van',
-    alt: 'Kendaraan penumpang untuk perjalanan keluarga dan rombongan',
-    cta: 'Tanya Layanan Pariwisata',
-    service: 'Transportasi Pariwisata'
-  },
-  {
-    id: 'dinas',
-    category: 'Untuk Kebutuhan Perusahaan',
-    title: 'Kunjungan Kerja dan Perjalanan Dinas',
-    text: 'Kegiatan resmi perusahaan seperti kunjungan kerja, rapat, dan work visit memerlukan transportasi yang praktis. Rute, jadwal, serta jenis kendaraannya dapat diatur bersama sebelum keberangkatan.',
-    vehicle: 'heroMpv',
-    alt: 'Kendaraan penumpang untuk kunjungan kerja dan perjalanan dinas',
-    cta: 'Diskusikan Kebutuhan Perusahaan',
-    service: 'Transportasi Perusahaan'
-  }
-];
-
-/* ---------------------------------------------------------------------------
-   10. TRANSPORT NEEDS  \u2014 why planning matters (replaces testimonials:
-       the client has not supplied verified reviews, so none are invented)
-   --------------------------------------------------------------------------- */
-const NEED_BLOCKS = [
-  {
-    icon: 'i-users',
-    title: 'Transportasi Personal dan Rombongan',
-    text: 'Perjalanan keluarga, wisata, dan kegiatan bersama rombongan memerlukan kendaraan yang sesuai dengan jumlah penumpang serta jadwal yang jelas sejak awal.'
-  },
-  {
-    icon: 'i-badge',
-    title: 'Kebutuhan Operasional Perusahaan',
-    text: 'Antar jemput karyawan, perjalanan dinas, kunjungan kerja, dan mobilitas harian perusahaan perlu diatur mengikuti rute serta jam kerja yang berlaku.'
-  },
-  {
-    icon: 'i-hardhat',
-    title: 'Mobilitas Tim dan Logistik Projek',
-    text: 'Operasional projek sering membutuhkan perpindahan tim dan pengangkutan barang ke lokasi kerja, sehingga armada serta jadwalnya perlu disesuaikan.'
-  }
-];
-
-/* ---------------------------------------------------------------------------
-   11. HOW TO START  \u2014 a booking is only confirmed once both parties agree
+   9. HOW TO START  \u2014 a booking is only confirmed once both parties agree
    --------------------------------------------------------------------------- */
 const START_STEPS = [
   { no: 1, title: 'Hubungi BUROQ TRANS', text: 'Hubungi kami melalui WhatsApp atau telepon untuk memulai diskusi kebutuhan transportasi Anda.' },
@@ -390,50 +338,7 @@ const START_STEPS = [
 ];
 
 /* ---------------------------------------------------------------------------
-   12. INFORMATIONAL CONTENT  \u2014 service education, not published articles.
-       Deliberately has NO author, NO publication date and NO article URL.
-   --------------------------------------------------------------------------- */
-const INFO_CARDS = [
-  {
-    id: 'info-perusahaan',
-    category: 'Panduan',
-    title: 'Memilih Layanan Transportasi untuk Kebutuhan Perusahaan',
-    excerpt: 'Setiap perusahaan memiliki pola mobilitas yang berbeda. Hal yang perlu diperhatikan saat memilih layanan transportasi untuk karyawan dan operasional harian.',
-    body:
-      'Kebutuhan transportasi perusahaan biasanya tidak berdiri sendiri. Ada antar jemput karyawan yang mengikuti jam kerja, perjalanan dinas yang mendadak, sampai kunjungan kerja ke beberapa lokasi dalam satu hari.\n\n' +
-      'Karena itu, sebelum menentukan layanan, ada baiknya mengumpulkan informasi dasar: jumlah karyawan, rute yang dilalui, jam berangkat dan pulang, serta kebutuhan kendaraan di luar jam operasional. Informasi tersebut memudahkan penyesuaian rute dan jadwal.\n\n' +
-      'Setiap kebutuhan perusahaan berbeda. Diskusikan kebutuhan Anda dengan tim kami agar layanan yang ditawarkan benar-benar sesuai dengan aktivitas perusahaan Anda.',
-    image: 'infoCompany',
-    alt: 'Pemandangan kawasan perkantoran dengan jalur transportasi di sekitarnya'
-  },
-  {
-    id: 'info-rombongan',
-    category: 'Panduan',
-    title: 'Merencanakan Transportasi untuk Perjalanan Rombongan',
-    excerpt: 'Perjalanan rombongan memerlukan perencanaan yang matang, mulai dari jumlah penumpang, jenis kendaraan, hingga titik jemput dan antar.',
-    body:
-      'Perjalanan bersama rombongan \u2014 baik keluarga, sekolah, komunitas, maupun kegiatan perusahaan \u2014 cenderung lebih rumit daripada perjalanan perorangan. Jumlah penumpang yang banyak membuat pemilihan kendaraan menjadi hal utama.\n\n' +
-      'Selain itu, perhatikan juga titik jemput dan titik antar, karena menentukan rute sekaligus lama perjalanan. Rombongan biasanya juga membutuhkan waktu berkumpul sebelum berangkat, sehingga jadwal perlu disusun lebih awal.\n\n' +
-      'Sampaikan rencana perjalanan rombongan Anda kepada kami. Jenis kendaraan dan jadwalnya dapat dikonsultasikan terlebih dahulu sebelum hari keberangkatan.',
-    image: 'infoGroup',
-    alt: 'Kendaraan bus pariwisata untuk perjalanan rombongan'
-  },
-  {
-    id: 'info-logistik',
-    category: 'Panduan',
-    title: 'Menyesuaikan Kendaraan dengan Kebutuhan Logistik dan Proyek',
-    excerpt: 'Jenis muatan dan kondisi lokasi menentukan pilihan kendaraan. Hal-hal yang perlu disesuaikan untuk kebutuhan logistik dan operasional projek.',
-    body:
-      'Transportasi logistik dan kebutuhan projek tidak bisa disamakan dengan transportasi penumpang. Jenis muatan, volume, serta kondisi lokasi menentukan kendaraan mana yang tepat digunakan.\n\n' +
-      'Untuk operasional projek, kebutuhannya bisa bertambah. Selain pengangkutan barang, sering kali diperlukan perpindahan tim kerja antar lokasi dan mobilitas karyawan di lapangan. Jadwalnya pun mengikuti perkembangan progres projek.\n\n' +
-      'Ceritakan jenis muatan dan kondisi lokasi projek Anda. Penyesuaian kendaraan dan jadwalnya akan kami diskusikan bersama sebelum layanan dimulai.',
-    image: 'infoLogistik',
-    alt: 'Kendaraan truk untuk kebutuhan transportasi logistik dan projek'
-  }
-];
-
-/* ---------------------------------------------------------------------------
-   13. FOOTER LINK GROUPS & SOCIAL
+   10. FOOTER LINK GROUPS & SOCIAL
    --------------------------------------------------------------------------- */
 /* Instagram and TikTok URLs are formed directly from the handles supplied by
    the client. Facebook: only a display name was supplied and no profile URL

@@ -203,23 +203,29 @@
         /* a real photo is rendered only once SERVICES[].photo is filled in; the
            placeholder keeps the exact 16:9 box the photo will occupy */
         const photo = s.photo ? asset(s.photo) : '';
+        /* vehicle photos ship with their own light backdrop — mix-blend-multiply
+           lets it disappear into the white card, and brightness lifts the few
+           files whose "white" is actually ~rgb(247) up to pure white */
         const media = photo
-          ? '<img src="' + esc(photo) + '" alt="' + esc('Layanan ' + s.name) + '" loading="lazy">'
-          : '<span class="svc-photo-empty">' + icon('i-image') +
-            '<span class="svc-photo-label" aria-hidden="true">Foto layanan</span></span>';
+          ? '<img class="relative z-10 h-full w-full object-contain brightness-[1.05] mix-blend-multiply transition-transform duration-500 ease-out group-hover:scale-[1.03]" src="' + esc(photo) + '" alt="' + esc('Layanan ' + s.name) + '" loading="lazy">'
+          : '<span class="relative z-10 flex h-full w-full flex-col items-center justify-center gap-1.5 text-slate-400">' + icon('i-image') +
+            '<span class="font-display text-[10px] font-semibold uppercase tracking-[0.13em]" aria-hidden="true">Foto layanan</span></span>';
 
-        return '<article class="svc-card">' +
-          '<div class="svc-photo' + (photo ? '' : ' is-empty') + '"' +
+        return '<article class="group relative flex flex-col overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:border-yellow-500/50 hover:shadow-xl focus-within:border-yellow-500/50">' +
+          '<div class="px-3 pt-3 sm:px-4 sm:pt-4">' +
+          '<div class="relative aspect-[16/9] overflow-hidden rounded-xl bg-white p-2 sm:p-3' + (photo ? '' : ' border border-dashed border-slate-300') + '"' +
           (photo ? '' : ' role="img" aria-label="' + esc('Foto layanan ' + s.name + ' belum tersedia') + '"') + '>' +
           media +
           '</div>' +
-          '<div class="svc-body">' +
-          '<h3 class="svc-title">' +
-          '<span class="svc-ico" aria-hidden="true">' + icon(s.icon) + '</span>' +
+          '</div>' +
+          '<div class="flex flex-1 flex-col px-4 pb-5 pt-4 sm:px-5">' +
+          '<h3 class="flex items-center gap-2.5 font-display text-[15px] font-bold leading-snug text-navy">' +
+          '<span class="grid h-8 w-8 flex-none place-items-center rounded-lg bg-navy text-gold-light ring-1 ring-yellow-500/30" aria-hidden="true">' + icon(s.icon) + '</span>' +
           esc(s.name) +
           '</h3>' +
-          '<p class="svc-desc">' + esc(s.desc) + '</p>' +
-          '<button type="button" class="svc-link" data-open-booking data-service="' + esc(s.name) + '">' +
+          '<span class="mt-3 block h-[2px] w-9 rounded-full bg-yellow-500" aria-hidden="true"></span>' +
+          '<p class="mt-3 mb-4 text-[13px] leading-relaxed text-muted">' + esc(s.desc) + '</p>' +
+          '<button type="button" class="mt-auto inline-flex items-center gap-2 self-start rounded-lg border border-slate-200 bg-slate-50 px-3.5 py-2 font-display text-[12.5px] font-semibold text-navy transition-all duration-300 hover:border-yellow-500/40 hover:bg-white hover:text-yellow-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-yellow-500/50 focus-visible:ring-offset-2" data-open-booking data-service="' + esc(s.name) + '">' +
           'Tanya layanan' + icon('i-arrow-right') +
           '</button>' +
           '</div>' +
@@ -260,44 +266,6 @@
       .join('');
   };
 
-  /* ============================ USE CASES =============================== */
-  const renderUseCases = () => {
-    const el = $('#useCaseGrid');
-    if (!el) return;
-    el.innerHTML = (typeof USE_CASES !== 'undefined' ? USE_CASES : [])
-      .map((u) =>
-        '<article class="uc-card">' +
-        '<div class="uc-media">' +
-        '<img data-asset="vehicles.' + esc(u.vehicle) + '" src="' + esc(asset('vehicles.' + u.vehicle)) +
-        '" alt="' + esc(u.alt) + '" loading="lazy">' +
-        '</div>' +
-        '<div class="uc-body">' +
-        '<p class="uc-cat">' + esc(u.category) + '</p>' +
-        '<h3 class="uc-title">' + esc(u.title) + '</h3>' +
-        '<p class="uc-text">' + esc(u.text) + '</p>' +
-        '<button type="button" class="btn btn-red" data-open-booking data-service="' + esc(u.service) + '">' +
-        esc(u.cta) + '</button>' +
-        '</div>' +
-        '</article>'
-      )
-      .join('');
-  };
-
-  /* ============================== NEEDS ================================= */
-  const renderNeeds = () => {
-    const el = $('#needGrid');
-    if (!el) return;
-    el.innerHTML = (typeof NEED_BLOCKS !== 'undefined' ? NEED_BLOCKS : [])
-      .map((n) =>
-        '<article class="need-card">' +
-        '<span class="need-ico">' + icon(n.icon) + '</span>' +
-        '<h3 class="need-title">' + esc(n.title) + '</h3>' +
-        '<p class="need-text">' + esc(n.text) + '</p>' +
-        '</article>'
-      )
-      .join('');
-  };
-
   /* =============================== STEPS ================================ */
   const renderSteps = () => {
     const el = $('#stepsCards');
@@ -312,58 +280,6 @@
       )
       .join('');
   };
-
-  /* ========================= INFORMATIONAL CARDS ========================= */
-  const renderInfo = () => {
-    const el = $('#infoGrid');
-    if (!el) return;
-    el.innerHTML = (typeof INFO_CARDS !== 'undefined' ? INFO_CARDS : [])
-      .map((c) =>
-        '<article class="ic-card">' +
-        '<div class="ic-media">' +
-        '<img data-asset="photos.' + esc(c.image) + '" src="' + esc(asset('photos.' + c.image)) +
-        '" alt="' + esc(c.alt) + '" loading="lazy">' +
-        '<span class="ic-tag">' + esc(c.category) + '</span>' +
-        '</div>' +
-        '<div class="ic-body">' +
-        '<h3 class="ic-title">' + esc(c.title) + '</h3>' +
-        '<p class="ic-excerpt">' + esc(c.excerpt) + '</p>' +
-        '<button type="button" class="ic-more" data-info="' + esc(c.id) + '">' +
-        'Baca Selengkapnya' + icon('i-arrow-ur') +
-        '</button>' +
-        '</div>' +
-        '</article>'
-      )
-      .join('');
-  };
-
-  const infoModal = $('#infoModal');
-  const infoKicker = $('#infoKicker');
-  const infoTitle = $('#infoTitle');
-  const infoImg = $('#infoImg');
-  const infoBody = $('#infoBody');
-
-  document.addEventListener('click', (e) => {
-    const trigger = e.target.closest('[data-info]');
-    if (!trigger) return;
-    const card = (INFO_CARDS || []).find((c) => c.id === trigger.dataset.info);
-    if (!card) return;
-
-    if (infoKicker) infoKicker.textContent = card.category;
-    if (infoTitle) infoTitle.textContent = card.title;
-    if (infoBody) {
-      infoBody.innerHTML = String(card.body || '')
-        .split(/\n\s*\n/)
-        .map((p) => '<p>' + esc(p.trim()) + '</p>')
-        .join('');
-    }
-    if (infoImg) {
-      infoImg.src = asset('photos.' + card.image);
-      infoImg.alt = card.alt;
-      infoImg.hidden = false;
-    }
-    openModal(infoModal, trigger);
-  });
 
   /* ============================ BOOKING FORM ============================ */
   const bookingModal = $('#bookingModal');
@@ -547,10 +463,7 @@
   renderServices();
   renderBenefits();
   renderCorpFeatures();
-  renderUseCases();
-  renderNeeds();
   renderSteps();
-  renderInfo();
   onScroll();
 
   window.addEventListener('load', () => {

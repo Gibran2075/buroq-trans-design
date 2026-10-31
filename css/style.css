@@ -241,7 +241,7 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold-light); outl
    grow and scroll naturally instead of clipping content.
    ============================================================================= */
 .hero{
-  position:relative; z-index:0;
+  position:relative; z-index:0; overflow:hidden;
   display:flex; flex-direction:column;
   min-height:100vh;                 /* fallback */
   min-height:100svh;
@@ -261,9 +261,10 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold-light); outl
 .hero-grid{
   flex:1 1 auto; min-height:0;
   display:grid;
-  grid-template-columns:minmax(0,44%) minmax(0,56%);
+  /* fr tracks (not %) so the column gap never pushes the grid past its box */
+  grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);
   align-items:center; align-content:center;
-  gap:clamp(24px,3vw,46px);
+  gap:clamp(20px,2.4vw,36px);
   padding-block:clamp(14px,2.6vh,30px);
 }
 .hero-copy{ min-width:0 }
@@ -285,12 +286,40 @@ a:focus-visible, button:focus-visible{ outline:2px solid var(--gold-light); outl
 }
 .hero-actions{ display:flex; flex-wrap:wrap; gap:14px; margin-top:clamp(22px,3.2vh,36px) }
 
-.hero-visual{ min-width:0; display:flex; align-items:center; justify-content:center }
-.hero-cars{ position:relative; width:100%; display:flex; justify-content:center }
+.hero-visual{ min-width:0; display:flex; align-items:center; justify-content:flex-end }
+@media (min-width:1024px){
+  /* let the vehicle group run out to the viewport edge so it reads as the focal point */
+  .hero-visual{ margin-right:calc(-22px - max(0px, (100vw - var(--container)) / 2)) }
+}
+.hero-cars{
+  position:relative; width:100%;
+  display:flex; align-items:center; justify-content:flex-end;
+}
+/* soft glow behind the vehicles — depth only, no hard edges */
+.hero-cars::before{
+  content:''; position:absolute; z-index:0;
+  width:82%; aspect-ratio:1/1; right:-2%; top:50%; transform:translateY(-50%);
+  background:radial-gradient(circle at 50% 50%, rgba(63,110,206,.34), rgba(217,181,43,.12) 46%, transparent 70%);
+  filter:blur(34px); pointer-events:none;
+}
 .hero-cars img{
-  width:100%; height:auto; object-fit:contain;
-  max-height:clamp(210px,42vh,470px);
-  filter:drop-shadow(0 30px 34px rgba(0,0,0,.5));
+  position:relative; z-index:1;
+  /* the box is driven by the column width only, so the art never shrinks to
+     letterbox next to empty space; the hero grows instead (min-height).
+     The wider aspect-ratio + cover crops the transparent margin at the top of
+     the file (bottom aligned), making the vehicles read noticeably larger. */
+  width:100%; max-width:none; height:auto;
+  aspect-ratio:1.75;
+  object-fit:cover; object-position:50% 100%;
+  filter:drop-shadow(0 22px 30px rgba(2,9,22,.45));
+  animation:heroFloat 7s ease-in-out infinite;
+}
+@keyframes heroFloat{
+  0%,100%{ transform:translateY(0) }
+  50%{ transform:translateY(-10px) }
+}
+@media (prefers-reduced-motion:reduce){
+  .hero-cars img{ animation:none }
 }
 
 /* ---- bottom information strip: three compact, factual groups ---- */
@@ -465,7 +494,10 @@ a.hc-value:hover{ color:var(--gold-light) }
 
 /* image slot — the placeholder and the future photo share this exact box */
 .svc-photo{ position:relative; aspect-ratio:16/9; background:#EEF2F8; overflow:hidden }
-.svc-photo img{ display:block; width:100%; height:100%; object-fit:cover }
+/* vehicle cutouts keep a white backdrop, so photos sit inside the slot without
+   cropping the unit; the white matches the card surface */
+.svc-photo:not(.is-empty){ background:#fff }
+.svc-photo img{ display:block; width:100%; height:100%; object-fit:contain }
 .svc-photo.is-empty{ display:flex; align-items:center; justify-content:center }
 .svc-photo.is-empty::before{
   content:""; position:absolute; inset:9px; z-index:0;
@@ -579,71 +611,8 @@ a.hc-value:hover{ color:var(--gold-light) }
 .tourism-card .h2{ margin-top:18px }
 .tourism-card .body-text{ margin-top:14px }
 
-.usecase-head{ margin-top:clamp(48px,5vw,74px) }
-.usecase-head .h2{ margin-top:12px }
-
-.uc-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:clamp(22px,3vw,34px); margin-top:36px }
-.uc-card{
-  background:#fff; border:1px solid #EDF1F7; border-radius:15px; padding:10px;
-  box-shadow:var(--shadow-card); transition:transform .25s ease;
-}
-.uc-card:hover{ transform:translateY(-4px) }
-.uc-media{
-  position:relative; border-radius:10px; overflow:hidden; aspect-ratio:1000/660;
-  background:linear-gradient(158deg,#13265A,#06193E); display:grid; place-items:center;
-}
-.uc-media::before{
-  content:""; position:absolute; left:-14%; top:-34%; width:62%; height:168%;
-  background:linear-gradient(150deg,rgba(217,181,43,.6),rgba(217,181,43,0) 70%);
-  transform:rotate(14deg);
-}
-.uc-media img{
-  position:relative; width:84%; height:80%; object-fit:contain;
-  filter:drop-shadow(0 20px 20px rgba(0,0,0,.45));
-  transition:transform .45s ease;
-}
-.uc-card:hover .uc-media img{ transform:translateY(-4px) }
-.uc-body{ padding:18px 12px 12px }
-.uc-cat{
-  font-family:Poppins,sans-serif; font-size:10.5px; font-weight:700;
-  letter-spacing:.13em; text-transform:uppercase; color:var(--red);
-}
-.uc-title{ margin-top:8px; font-family:Poppins,sans-serif; font-size:16.5px; font-weight:700; text-transform:uppercase; line-height:1.4 }
-.uc-text{ margin-top:11px; font-size:13.2px; line-height:1.72; color:var(--muted) }
-.uc-card .btn-red{ width:100%; margin-top:16px; height:46px; padding:0 12px; font-size:12px; letter-spacing:.03em; text-transform:none }
-
 /* =============================================================================
-   10. TRANSPORT NEEDS
-   ============================================================================= */
-.needs{
-  position:relative; overflow:hidden; background:var(--navy);
-  padding:clamp(56px,6vw,82px) 0 clamp(52px,6vw,74px); text-align:center;
-}
-.needs::before{
-  content:""; position:absolute; left:-120px; top:-90px;
-  width:420px; height:420px; border-radius:50%;
-  background:radial-gradient(circle,rgba(41,78,158,.5),transparent 70%);
-}
-.needs .container-main{ position:relative; z-index:1 }
-.needs .pill{ display:inline-flex }
-.needs .h2{ margin-top:22px }
-
-.need-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px; margin-top:38px }
-.need-card{
-  background:#10275A; border:1px solid rgba(255,255,255,.07);
-  border-radius:13px; padding:26px 26px 28px; text-align:left;
-}
-.need-ico{
-  width:44px; height:44px; border-radius:11px;
-  background:linear-gradient(180deg,var(--gold-light),var(--gold));
-  color:#12224A; display:grid; place-items:center;
-}
-.need-ico .ico{ width:21px; height:21px }
-.need-title{ margin-top:18px; font-family:Poppins,sans-serif; font-size:15.5px; font-weight:700; color:#fff; line-height:1.45 }
-.need-text{ margin-top:11px; font-size:13.5px; line-height:1.75; color:#C4CDE0 }
-
-/* =============================================================================
-   11. BOOKING STEPS
+   10. BOOKING STEPS
    ============================================================================= */
 .steps{ background:#fff; padding:clamp(58px,6vw,86px) 0 clamp(30px,4vw,50px) }
 .steps-grid{
@@ -672,7 +641,7 @@ a.hc-value:hover{ color:var(--gold-light) }
 }
 
 /* =============================================================================
-   12. CLOSING CTA
+   11. CLOSING CTA
    ============================================================================= */
 .closing{
   position:relative; z-index:3; background:var(--navy);
@@ -690,42 +659,7 @@ a.hc-value:hover{ color:var(--gold-light) }
 .cl-car-c{ right:8%; width:32%; z-index:2 }
 
 /* =============================================================================
-   13. INFORMATIONAL CONTENT
-   ============================================================================= */
-.info{ position:relative; z-index:0; background:#fff; padding:clamp(96px,11vw,158px) 0 clamp(58px,6vw,86px) }
-.info-head{ max-width:660px }
-.info-head .h2{ margin-top:12px }
-.info-head .body-text{ margin-top:14px }
-
-.info-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:30px; margin-top:38px }
-.ic-card{
-  background:#fff; border:1px solid #EDF1F7; border-radius:13px; padding:10px;
-  box-shadow:var(--shadow-card); display:flex; flex-direction:column;
-}
-.ic-media{ position:relative; border-radius:9px; overflow:hidden; aspect-ratio:16/10; border:2px solid rgba(217,181,43,.75) }
-.ic-media img{ width:100%; height:100%; object-fit:cover; transition:transform .5s ease }
-.ic-card:hover .ic-media img{ transform:scale(1.05) }
-.ic-tag{
-  position:absolute; left:8px; bottom:8px;
-  background:rgba(6,25,62,.93); border:1px solid rgba(217,181,43,.65);
-  border-radius:5px; padding:4px 9px;
-  font-family:Poppins,sans-serif; font-size:8px; font-weight:700;
-  letter-spacing:.14em; text-transform:uppercase; color:#fff;
-}
-.ic-body{ padding:18px 12px 14px; display:flex; flex-direction:column; flex:1 }
-.ic-title{ font-family:Poppins,sans-serif; font-size:17px; font-weight:700; line-height:1.42; color:#0E1B33 }
-.ic-excerpt{ margin-top:11px; font-size:13.2px; line-height:1.7; color:var(--muted); flex:1 }
-.ic-more{
-  margin-top:18px; display:inline-flex; align-items:center; gap:7px;
-  background:none; border:0; padding:0; cursor:pointer;
-  font-family:Poppins,sans-serif; font-size:13px; font-weight:600; color:#B99212;
-}
-.ic-more .ico{ width:13px; height:13px; transition:transform .2s ease }
-.ic-more:hover{ color:var(--gold) }
-.ic-more:hover .ico{ transform:translateX(3px) }
-
-/* =============================================================================
-   14. FOOTER
+   12. FOOTER
    ============================================================================= */
 .site-footer{ background:var(--navy-deep); color:#B7C1D4; padding-top:clamp(46px,5vw,64px) }
 .footer-grid{
@@ -813,7 +747,6 @@ a.hc-value:hover{ color:var(--gold-light) }
   box-shadow:0 50px 90px -50px rgba(0,0,0,.9);
   animation:modalIn .28s ease;
 }
-.modal-card-article{ width:min(740px,100%) }
 @keyframes modalIn{ from{ opacity:0; transform:translateY(18px) } to{ opacity:1; transform:none } }
 
 .modal-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:18px }
@@ -871,10 +804,6 @@ a.hc-value:hover{ color:var(--gold-light) }
 .form-success strong{ font-family:Poppins,sans-serif; font-size:14.5px; color:#14663A }
 .form-success p{ font-size:13.3px; color:#3D6B51; margin-top:5px; line-height:1.7 }
 
-.article-img{ width:100%; height:260px; object-fit:cover; border-radius:12px; margin-top:20px }
-.article-body{ margin-top:20px; font-size:14.8px; line-height:1.85; color:#46536B }
-.article-body p + p{ margin-top:14px }
-
 /* =============================================================================
    RESPONSIVE
    ============================================================================= */
@@ -916,7 +845,10 @@ a.hc-value:hover{ color:var(--gold-light) }
   .hero{ padding-bottom:clamp(18px,3vh,32px) }
   .hero-grid{ grid-template-columns:minmax(0,1fr); gap:clamp(18px,3vh,30px); align-content:center }
   .hero-title{ font-size:clamp(30px,4.6vw,44px) }
-  .hero-cars img{ max-height:clamp(170px,30vh,300px) }
+  .hero-visual{ justify-content:center }
+  .hero-cars{ justify-content:center }
+  .hero-cars::before{ width:70%; right:auto; left:50%; transform:translate(-50%,-50%) }
+  .hero-cars img{ max-width:100%; max-height:clamp(240px,46vh,440px) }
   .hero-actions{ width:100% }
   .hero-actions .btn{ flex:1 1 auto; min-width:0; white-space:normal; text-align:center; height:auto; min-height:48px; padding:12px 16px; line-height:1.3 }
 
@@ -972,12 +904,9 @@ a.hc-value:hover{ color:var(--gold-light) }
   .feature-list{ margin-top:6px }
   .corp-media img{ min-height:250px }
 
-  .uc-grid{ grid-template-columns:1fr }
   .steps-grid{ grid-template-columns:1fr; gap:36px }
   .steps-right{ order:-1 }
   .steps-car{ width:100%; margin-left:0 }
-  .need-grid{ grid-template-columns:repeat(2,1fr) }
-  .need-card:last-child{ grid-column:1 / -1; max-width:calc(50% - 13px); margin-inline:auto }
 
   .closing-cars{ margin-bottom:clamp(-96px,-12vw,-56px) }
   .cl-car-a{ left:2%; width:34% }
@@ -998,7 +927,7 @@ a.hc-value:hover{ color:var(--gold-light) }
   .hero-actions{ gap:12px; flex-direction:column }
   .hero-actions .btn{ flex:1 1 auto; width:100%; min-width:0; white-space:normal; padding:14px 16px; text-align:center }
   .btn-hero-booking{ padding:14px 16px; gap:9px; justify-content:center }
-  .hero-cars img{ max-height:clamp(150px,26vh,240px) }
+  .hero-cars img{ max-height:clamp(220px,44vh,380px) }
 
   /* operational info reflows into stacked, compact rows */
   .hero-contact{ grid-template-columns:minmax(0,1fr); gap:0; padding-top:12px }
@@ -1042,11 +971,7 @@ a.hc-value:hover{ color:var(--gold-light) }
   .b-card{ padding:22px 20px 24px }
 
   .tourism-card{ padding:24px 22px 24px 50px }
-  .uc-body{ padding:16px 8px 8px }
-  .uc-card .btn-red{ font-size:11.5px }
 
-  .need-grid{ grid-template-columns:1fr }
-  .need-card:last-child{ max-width:none }
   .steps-cards{ gap:16px }
   .s-card{ padding:20px 18px 22px }
   .s-title{ font-size:15.5px; margin-top:16px }
@@ -1054,9 +979,6 @@ a.hc-value:hover{ color:var(--gold-light) }
   .closing-title{ font-size:clamp(30px,7.6vw,44px) }
   .closing-cars{ height:170px; margin-bottom:-72px }
 
-  .info-grid{ grid-template-columns:1fr; gap:24px }
-  .ic-body{ padding:16px 8px 12px }
-  .ic-title{ font-size:15.5px }
 
   .footer-grid{ grid-template-columns:1fr; gap:30px }
   .footer-col h3{ margin-bottom:14px }
@@ -1070,7 +992,7 @@ a.hc-value:hover{ color:var(--gold-light) }
   :root{ --header-h:76px }
   .brand-logo{ width:50px; height:50px }
   .btn-book-now{ display:none }
-  .hero-cars img{ max-height:clamp(140px,24vh,210px) }
+  .hero-cars img{ max-height:clamp(190px,40vh,300px) }
   .hc-value{ font-size:14.5px }
   .hero-title{ font-size:clamp(26px,7.6vw,33px) }
 
