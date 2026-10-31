@@ -557,7 +557,36 @@ a.hc-value:hover{ color:var(--gold-light) }
 .b-text{ margin-top:12px; font-size:13.3px; line-height:1.75; color:var(--muted) }
 
 /* =============================================================================
-   7. CORPORATE TRANSPORTATION
+   7. BOOKING STEPS (CARA MEMULAI)
+   ============================================================================= */
+.steps{ background:#fff; padding:clamp(58px,6vw,86px) 0 clamp(30px,4vw,50px) }
+.steps-grid{
+  display:grid; grid-template-columns:minmax(0,.98fr) minmax(0,1.02fr);
+  gap:clamp(30px,4vw,58px); align-items:center;
+}
+.steps-cards{ display:grid; grid-template-columns:repeat(2,1fr); gap:22px }
+.s-card{
+  background:#fff; border:1px solid #EDF1F7; border-radius:13px;
+  padding:24px 22px 26px; box-shadow:var(--shadow-card);
+}
+.s-no{
+  width:36px; height:36px; border-radius:10px; color:#152449;
+  background:linear-gradient(180deg,var(--gold-light),var(--gold));
+  display:grid; place-items:center;
+  font-family:Poppins,sans-serif; font-size:15px; font-weight:700;
+}
+.s-title{ margin-top:20px; font-family:Poppins,sans-serif; font-size:17px; font-weight:700; color:#0E1B33 }
+.s-text{ margin-top:10px; font-size:13.2px; line-height:1.7; color:var(--muted) }
+
+.steps-right .h2{ margin-top:20px }
+.steps-right .body-text{ margin-top:14px; max-width:44ch }
+.steps-car{
+  margin-top:26px; width:104%; max-width:none; margin-left:-4%;
+  object-fit:contain; filter:drop-shadow(0 34px 34px rgba(7,27,61,.26));
+}
+
+/* =============================================================================
+   8. CORPORATE TRANSPORTATION
    ============================================================================= */
 .corp{ background:#fff; padding:clamp(58px,6vw,84px) 0 clamp(46px,5vw,70px) }
 .corp .h2{ margin-top:12px }
@@ -595,7 +624,7 @@ a.hc-value:hover{ color:var(--gold-light) }
 .corp-media img{ width:100%; height:100%; min-height:330px; object-fit:cover }
 
 /* =============================================================================
-   8/9. TOURISM + PACKAGES
+   9. TOURISM + PACKAGES
    ============================================================================= */
 .tourism{ background:#fff; padding:clamp(34px,4vw,54px) 0 clamp(58px,6vw,86px) }
 
@@ -612,54 +641,26 @@ a.hc-value:hover{ color:var(--gold-light) }
 .tourism-card .body-text{ margin-top:14px }
 
 /* =============================================================================
-   10. BOOKING STEPS
-   ============================================================================= */
-.steps{ background:#fff; padding:clamp(58px,6vw,86px) 0 clamp(30px,4vw,50px) }
-.steps-grid{
-  display:grid; grid-template-columns:minmax(0,.98fr) minmax(0,1.02fr);
-  gap:clamp(30px,4vw,58px); align-items:center;
-}
-.steps-cards{ display:grid; grid-template-columns:repeat(2,1fr); gap:22px }
-.s-card{
-  background:#fff; border:1px solid #EDF1F7; border-radius:13px;
-  padding:24px 22px 26px; box-shadow:var(--shadow-card);
-}
-.s-no{
-  width:36px; height:36px; border-radius:10px; color:#152449;
-  background:linear-gradient(180deg,var(--gold-light),var(--gold));
-  display:grid; place-items:center;
-  font-family:Poppins,sans-serif; font-size:15px; font-weight:700;
-}
-.s-title{ margin-top:20px; font-family:Poppins,sans-serif; font-size:17px; font-weight:700; color:#0E1B33 }
-.s-text{ margin-top:10px; font-size:13.2px; line-height:1.7; color:var(--muted) }
-
-.steps-right .h2{ margin-top:20px }
-.steps-right .body-text{ margin-top:14px; max-width:44ch }
-.steps-car{
-  margin-top:26px; width:104%; max-width:none; margin-left:-4%;
-  object-fit:contain; filter:drop-shadow(0 34px 34px rgba(7,27,61,.26));
-}
-
-/* =============================================================================
-   11. CLOSING CTA
+   10. CLOSING CTA
    ============================================================================= */
 .closing{
   position:relative; z-index:3; background:var(--navy);
-  padding-top:clamp(58px,7vw,92px); text-align:center; overflow:visible;
+  padding-top:clamp(58px,7vw,92px); padding-bottom:clamp(10px,1.6vw,22px);
+  text-align:center; overflow:visible;
 }
 .closing-title{
   color:#fff; font-weight:700; letter-spacing:-.02em;
   font-size:clamp(33px,5vw,88px); line-height:1.12;
 }
 .closing-sub{ margin-top:22px; color:#9FACC4; font-size:15px }
-.closing-cars{ position:relative; height:clamp(160px,20vw,270px); margin-top:clamp(24px,3vw,44px); margin-bottom:clamp(-140px,-9vw,-70px) }
+.closing-cars{ position:relative; height:clamp(160px,20vw,270px); margin-top:clamp(24px,3vw,44px); margin-bottom:0 }
 .closing-cars img{ position:absolute; bottom:0; object-fit:contain; filter:drop-shadow(0 26px 26px rgba(0,0,0,.32)) }
 .cl-car-a{ left:8%; width:30%; z-index:1 }
-.cl-car-b{ left:32%; width:36%; z-index:3; bottom:-8px }
+.cl-car-b{ left:32%; width:36%; z-index:3; bottom:0 }
 .cl-car-c{ right:8%; width:32%; z-index:2 }
 
 /* =============================================================================
-   12. FOOTER
+   11. FOOTER
    ============================================================================= */
 .site-footer{ background:var(--navy-deep); color:#B7C1D4; padding-top:clamp(46px,5vw,64px) }
 .footer-grid{
@@ -908,7 +909,7 @@ a.hc-value:hover{ color:var(--gold-light) }
   .steps-right{ order:-1 }
   .steps-car{ width:100%; margin-left:0 }
 
-  .closing-cars{ margin-bottom:clamp(-96px,-12vw,-56px) }
+  .closing-cars{ margin-bottom:0 }
   .cl-car-a{ left:2%; width:34% }
   .cl-car-b{ left:31%; width:40% }
   .cl-car-c{ right:2%; width:36% }
@@ -977,7 +978,7 @@ a.hc-value:hover{ color:var(--gold-light) }
   .s-title{ font-size:15.5px; margin-top:16px }
 
   .closing-title{ font-size:clamp(30px,7.6vw,44px) }
-  .closing-cars{ height:170px; margin-bottom:-72px }
+  .closing-cars{ height:170px }
 
 
   .footer-grid{ grid-template-columns:1fr; gap:30px }
@@ -1000,7 +1001,7 @@ a.hc-value:hover{ color:var(--gold-light) }
   .about-car-a{ width:56%; left:-6% }
   .about-car-b{ width:62% }
   .steps-cards{ grid-template-columns:1fr }
-  .closing-cars{ height:140px; margin-bottom:-58px }
+  .closing-cars{ height:140px }
   .wa-fab{ width:52px; height:52px; right:14px; bottom:14px }
   .modal-card{ max-width:100%; margin:0 8px }
 }
