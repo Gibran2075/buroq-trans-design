@@ -35,7 +35,7 @@ const CONFIG = {
   /* Tombol "Buka di Google Maps" — membuka navigasi/rute langsung ke kantor. */
   directionsUrl: 'https://www.google.com/maps/dir/?api=1&destination=' +
     encodeURIComponent(COMPANY_ADDRESS),
-  hours: 'Senin\u2013Sabtu, 08.00\u201317.00 WIB',
+  hours: 'Senin\u2013Sabtu, 08.00\u201320.00 WIB',
 
   /* --- WhatsApp ----------------------------------------------------------
      Primary contact number in international format (E.164, no "+").
@@ -125,7 +125,7 @@ const STATS = [
   { icon: 'i-layers', value: '7 Layanan',   label: 'Rental, karyawan, carter, pariwisata, perusahaan, logistik, dan projek' },
   { icon: 'i-users',  value: 'Personal & Korporat', label: 'Individu, keluarga, sekolah, komunitas, dan perusahaan' },
   { icon: 'i-pin',    value: 'Rute Fleksibel', label: 'Rute dan jadwal dibahas sesuai kebutuhan Anda' },
-  { icon: 'i-clock',  value: 'Senin\u2013Sabtu', label: 'Jam layanan 08.00\u201317.00 WIB' }
+  { icon: 'i-clock',  value: 'Senin\u2013Sabtu', label: 'Jam layanan 08.00\u201320.00 WIB' }
 ];
 
 /* ---------------------------------------------------------------------------

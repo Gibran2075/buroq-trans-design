@@ -216,7 +216,7 @@ Catatan tambahan:
 
 - Klaim yang tidak bisa diverifikasi ("nomor satu", "termurah", "terbaik", "pasti tepat waktu",
   klaim ketersediaan 24 jam) sengaja **tidak dipakai**. Jam layanan ditulis apa adanya:
-  **Senin–Sabtu, 08.00–17.00 WIB**.
+  **Senin–Sabtu, 08.00–20.00 WIB**.
 - Gambar kendaraan adalah **stok cutout**, bukan armada asli. Ganti dengan foto unit milik klien
   (sudut depan, latar transparan) agar tidak menyesatkan calon pelanggan.
 
