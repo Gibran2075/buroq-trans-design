@@ -355,6 +355,6 @@ const START_STEPS = [
    could be verified, so it is deliberately NOT linked. */
 const SOCIAL_LINKS = [
   { icon: 'i-instagram', label: 'Instagram', handle: '@brqtrans_official', url: 'https://www.instagram.com/brqtrans_official/' },
-  { icon: 'i-tiktok',    label: 'TikTok',    handle: '@brqtrans_official', url: 'https://www.tiktok.com/@brqtrans_official' },
+  { icon: 'i-tiktok',    label: 'TikTok',    handle: '@buroqtrans_official', url: 'https://www.tiktok.com/@buroqtrans_official' },
   { icon: 'i-facebook',  label: 'Facebook',  handle: 'Amadsatari',          url: '' }
 ];
