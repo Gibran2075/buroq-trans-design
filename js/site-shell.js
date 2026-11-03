@@ -150,6 +150,24 @@
 
   /* ------------------------------------------------------------------ footer */
   const renderFooter = (mount) => {
+    const mapsLink = CONFIG.directionsUrl || CONFIG.mapsUrl || '';
+    const mapInfo =
+      '<span class="footer-map-info">' + icon('i-pin') +
+        '<span>' + esc(CONFIG.address) + '</span>' +
+      '</span>';
+    const mapButton = mapsLink
+      ? '<a class="btn btn-gold footer-map-open" href="' + esc(mapsLink) +
+        '" target="_blank" rel="noopener">' + icon('i-arrow-ur') +
+        '<span>Buka di Google Maps</span></a>'
+      : '';
+    const mapMedia = CONFIG.mapsEmbedUrl
+      ? '<div class="footer-map-frame">' +
+          '<iframe src="' + esc(CONFIG.mapsEmbedUrl) + '" title="' +
+          esc('Peta lokasi ' + CONFIG.businessName + ', ' + CONFIG.address) +
+          '" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>' +
+        '</div>'
+      : '<div class="footer-map-fallback">' + icon('i-map') + '</div>';
+
     mount.innerHTML =
       '<footer class="site-footer" id="kontak">' +
         '<div class="container-main footer-grid">' +
@@ -163,14 +181,17 @@
             '<ul class="footer-social" id="footerSocial"></ul>' +
             '<p class="footer-social-note" id="socialNote"></p>' +
           '</div>' +
-          '<nav class="footer-col" aria-label="Menu footer">' +
-            '<h3>MENU</h3><ul id="footerMenu"></ul>' +
-          '</nav>' +
           '<div class="footer-col">' +
             '<h3>LAYANAN</h3><ul id="footerServices"></ul>' +
           '</div>' +
           '<div class="footer-col">' +
             '<h3>KONTAK</h3><ul class="footer-contact" id="footerContact"></ul>' +
+          '</div>' +
+          '<div class="footer-col footer-map-col">' +
+            '<h3>LOKASI KAMI</h3>' +
+            '<div class="footer-map">' + mapMedia +
+              '<div class="footer-map-bar">' + mapInfo + mapButton + '</div>' +
+            '</div>' +
           '</div>' +
         '</div>' +
         '<div class="footer-bar">' +
@@ -178,13 +199,6 @@
             '. ALL RIGHTS RESERVED.</p></div>' +
         '</div>' +
       '</footer>';
-
-    const menu = mount.querySelector('#footerMenu');
-    if (menu) {
-      menu.innerHTML = (typeof NAV_LINKS !== 'undefined' ? NAV_LINKS : [])
-        .map((i) => '<li><a href="' + esc(href(i.href)) + '">' + esc(i.label) + '</a></li>')
-        .join('');
-    }
 
     const services = mount.querySelector('#footerServices');
     if (services) {
