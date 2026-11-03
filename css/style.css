@@ -668,7 +668,11 @@ a.hc-value:hover{ color:var(--gold-light) }
   font-size:clamp(33px,5vw,88px); line-height:1.12;
 }
 .closing-sub{ margin-top:22px; color:#9FACC4; font-size:15px }
-.closing-cars{ display:flex; justify-content:center; margin-top:clamp(20px,2.4vw,32px); margin-bottom:0 }
+.closing-cars{
+  display:flex; justify-content:center;
+  margin-top:clamp(20px,2.4vw,32px); margin-bottom:0;
+  pointer-events:none;
+}
 .closing-cars img{
   width:100%; max-width:1040px; height:auto;
   object-fit:contain; object-position:center bottom;
@@ -927,6 +931,21 @@ a.hc-value:hover{ color:var(--gold-light) }
 
   .blog-grid{ grid-template-columns:repeat(2,1fr); gap:24px }
   .footer-grid{ grid-template-columns:repeat(2,1fr); gap:34px }
+}
+
+/* Desktop: closing CTA fills the viewport and the fleet sits closer to the CTA.
+   The negative top margin compensates for the transparent canvas above the
+   vehicles, so the visible gap matches the compact mobile spacing. */
+@media (min-width:1024px){
+  .closing{
+    display:flex; flex-direction:column;
+    min-height:100vh;
+  }
+  .closing-inner{
+    display:flex; flex-direction:column; justify-content:center;
+    flex:1;
+  }
+  .closing-cars{ margin-top:clamp(-80px,-4.4vw,-48px) }
 }
 
 @media (max-width:767px){
