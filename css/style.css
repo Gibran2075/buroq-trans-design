@@ -668,11 +668,12 @@ a.hc-value:hover{ color:var(--gold-light) }
   font-size:clamp(33px,5vw,88px); line-height:1.12;
 }
 .closing-sub{ margin-top:22px; color:#9FACC4; font-size:15px }
-.closing-cars{ position:relative; height:clamp(160px,20vw,270px); margin-top:clamp(24px,3vw,44px); margin-bottom:0 }
-.closing-cars img{ position:absolute; bottom:0; object-fit:contain; filter:drop-shadow(0 26px 26px rgba(0,0,0,.32)) }
-.cl-car-a{ left:8%; width:30%; z-index:1 }
-.cl-car-b{ left:32%; width:36%; z-index:3; bottom:0 }
-.cl-car-c{ right:8%; width:32%; z-index:2 }
+.closing-cars{ display:flex; justify-content:center; margin-top:clamp(20px,2.4vw,32px); margin-bottom:0 }
+.closing-cars img{
+  width:100%; max-width:1040px; height:auto;
+  object-fit:contain; object-position:center bottom;
+  filter:drop-shadow(0 26px 26px rgba(0,0,0,.32));
+}
 
 /* =============================================================================
    11. FOOTER
@@ -924,11 +925,6 @@ a.hc-value:hover{ color:var(--gold-light) }
   .steps-right{ order:-1 }
   .steps-car{ width:100%; margin-left:0 }
 
-  .closing-cars{ margin-bottom:0 }
-  .cl-car-a{ left:2%; width:34% }
-  .cl-car-b{ left:31%; width:40% }
-  .cl-car-c{ right:2%; width:36% }
-
   .blog-grid{ grid-template-columns:repeat(2,1fr); gap:24px }
   .footer-grid{ grid-template-columns:repeat(2,1fr); gap:34px }
 }
@@ -993,8 +989,6 @@ a.hc-value:hover{ color:var(--gold-light) }
   .s-title{ font-size:15.5px; margin-top:16px }
 
   .closing-title{ font-size:clamp(30px,7.6vw,44px) }
-  .closing-cars{ height:170px }
-
 
   .footer-grid{ grid-template-columns:1fr; gap:30px }
   .footer-col h3{ margin-bottom:14px }
@@ -1016,7 +1010,6 @@ a.hc-value:hover{ color:var(--gold-light) }
   .about-car-a{ width:56%; left:-6% }
   .about-car-b{ width:62% }
   .steps-cards{ grid-template-columns:1fr }
-  .closing-cars{ height:140px }
   .wa-fab{ width:52px; height:52px; right:14px; bottom:14px }
   .modal-card{ max-width:100%; margin:0 8px }
 }

@@ -85,7 +85,8 @@ const ASSETS = {
 
   photos: {
     about: 'assets/photos/about.jpg',             // toll road corridor
-    corp: 'assets/photos/corp.jpg'                // business district
+    corp: 'assets/photos/corp.jpg',               // business district
+    fleet: 'assets/photos/solusi_trans.webp'      // closing CTA fleet lineup
   }
 };
 
