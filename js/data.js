@@ -17,6 +17,12 @@
 const COMPANY_ADDRESS =
   'Jl Babakan Bandung RT 03/20 Kel Adiarsa Barat Citarum, Kec. Karawang Barat, Kab. Karawang';
 
+/* Koordinat titik kantor, hasil resolve tautan pendek Google Maps resmi
+   (https://maps.app.goo.gl/osvpvwVTCMCmgKmLA → Buroq Transport).
+   Dipakai peta embed & tombol rute karena pencarian berdasarkan teks alamat
+   bisa gagal ("alamat tidak ditemukan") meski tautan pendeknya valid. */
+const COMPANY_COORDS = '-6.3241952,107.3105579';
+
 const CONFIG = {
   businessName: 'BUROQ TRANS',
   legalName: 'CV. EN BUROQ TRANSPORTASI',
@@ -28,13 +34,16 @@ const CONFIG = {
      di ruang sempit; alamat lengkap tetap ada di `address` di atas. */
   cityAddress: 'Jl Babakan Bandung RT 03/20 Kel Adiarsa Barat Citarum, Karawang',
   mapsUrl: 'https://maps.app.goo.gl/osvpvwVTCMCmgKmLA',
-  /* Peta halaman Tentang Kami: embed Google Maps tanpa API key, dibangun dari
-     alamat kantor sehingga ikut berubah otomatis bila alamat diperbarui. */
-  mapsEmbedUrl: 'https://maps.google.com/maps?q=' + encodeURIComponent(COMPANY_ADDRESS) +
+  /* Titik kantor dalam bentuk lat,lng (lihat COMPANY_COORDS di atas). */
+  mapsCoords: COMPANY_COORDS,
+  /* Peta halaman Tentang Kami & footer: embed Google Maps tanpa API key.
+     Memakai koordinat, bukan teks alamat, agar pin selalu ketemu. */
+  mapsEmbedUrl: 'https://maps.google.com/maps?q=' + encodeURIComponent(COMPANY_COORDS) +
     '&z=17&hl=id&iwloc=B&output=embed',
-  /* Tombol "Buka di Google Maps" — membuka navigasi/rute langsung ke kantor. */
+  /* Tombol "Buka di Google Maps" — membuka navigasi/rute langsung ke titik
+     kantor yang sama dengan tautan pendek di atas. */
   directionsUrl: 'https://www.google.com/maps/dir/?api=1&destination=' +
-    encodeURIComponent(COMPANY_ADDRESS),
+    encodeURIComponent(COMPANY_COORDS),
   hours: 'Senin\u2013Sabtu, 08.00\u201320.00 WIB',
 
   /* --- WhatsApp ----------------------------------------------------------
