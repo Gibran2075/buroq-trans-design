@@ -32,7 +32,7 @@
     'Halo ' + CONFIG.businessName + ', saya ingin konsultasi mengenai layanan ' + serviceName + '.';
 
   const serviceUrl = (service) => url('layanan/' + service.id + '/');
-  const homeUrl = url('index.html');
+  const homeUrl = url('');
   const servicesUrl = url('layanan/');
 
   /* ----------------------------------------------------------- shared pieces */

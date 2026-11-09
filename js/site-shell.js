@@ -34,11 +34,12 @@
   const logo = url((typeof ASSETS !== 'undefined' && ASSETS.brand && ASSETS.brand.logo) || 'assets/brand/logoburoq.png');
 
   /* On the homepage, links that point at index.html stay in-page anchors so the
-     existing smooth scrolling keeps working. Elsewhere they become real URLs. */
+     existing smooth scrolling keeps working. Elsewhere they point at the site
+     root (e.g. "../") so the browser resolves to "/" instead of "/index.html". */
   const href = (target) => {
-    if (isHome && target.indexOf('index.html') === 0) {
+    if (target.indexOf('index.html') === 0) {
       const rest = target.slice('index.html'.length);
-      return rest || '#home';
+      return isHome ? (rest || '#home') : BASE + rest;
     }
     return url(target);
   };
@@ -123,7 +124,7 @@
     mount.innerHTML =
       '<header class="site-header" id="siteHeader">' +
         '<div class="container-main header-inner">' +
-          '<a class="brand" href="' + esc(isHome ? '#home' : url('index.html')) + '" aria-label="BUROQ TRANS — beranda">' +
+          '<a class="brand" href="' + esc(href('index.html')) + '" aria-label="BUROQ TRANS — beranda">' +
             '<img class="brand-logo" src="' + esc(logo) + '" alt="Logo BUROQ TRANS" width="60" height="60">' +
             '<span class="brand-word"><strong>BUROQ</strong><span>TRANS</span></span>' +
           '</a>' +
@@ -172,7 +173,7 @@
       '<footer class="site-footer" id="kontak">' +
         '<div class="container-main footer-grid">' +
           '<div class="footer-brand">' +
-            '<a class="brand" href="' + esc(isHome ? '#home' : url('index.html')) + '">' +
+            '<a class="brand" href="' + esc(href('index.html')) + '">' +
               '<img class="brand-logo" src="' + esc(logo) + '" alt="Logo BUROQ TRANS" width="70" height="70">' +
             '</a>' +
             '<p class="footer-brand-name">' + esc(CONFIG.businessName) + '</p>' +
